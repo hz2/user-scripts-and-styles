@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Download Original Picture
 // @name:zh-CN  下载原始图片
-// @description        Download Original Picture Tool
-// @description:zh-CN  下载原始图片工具
+// @description  A tool to help you download full size images from websites
+// @description:zh-CN  一个帮你从网站下载原始尺寸图片的工具
 // @namespace   huching.net
 // @include     *://medium.com/*
 // @include     *://twitter.com/*
