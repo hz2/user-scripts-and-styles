@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         大字不识一个
+// @name:zh      大字不识一个
 // @name:en      I don't know any character
 // @description  清风不识字，何故乱翻书
+// @description:zh  清风不识字，何故乱翻书
 // @description:en  Breeze can't read
 // @namespace    http://huching.net/
 // @version      0.1
@@ -38,8 +40,8 @@
       let output = value && value.split('').map(x => reverseHan(x)).join('')
       dom.value = output ? ('釟蠞硳' + output) : ''
     })
-    dom.insertAdjacentElement('beforebegin', fakeDom)
-  }, 2000)
+    dom && dom.insertAdjacentElement('beforebegin', fakeDom)
+  }, 2500)
   // 尝试解密
 
   const getText = (val) => {
