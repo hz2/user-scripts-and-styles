@@ -17,10 +17,7 @@
 // @include     *://twitter.com/*
 // @include     *://weibo.com/*
 // @include     *://*.weibo.com/*
-// @compatible firefox 火狐赛高
-// @incompatible firefox 火狐赛高!
 // @noframes
-// @nocompat firefox
 // @grant          unsafeWindow
 // @grant          GM_setClipboard
 // @grant          GM_xmlhttpRequest
@@ -55,6 +52,10 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
 .hx-download-original-images-tool:hover {
     opacity:1;
     transform: scale(.9);
+}
+.hx-download-original-images-tool:active {
+    opacity:.8;
+    transform: scale(.7)  rotateZ(360deg);
 }
 </style>`);
 
@@ -141,12 +142,20 @@ if (hostname === "twitter.com") {
     }
   })
 } else if (hostname.includes('weibo')) {
+  const isWeiboNode = dom => {
+    if (dom.parentElement.attributes['node-type'].nodeValue === 'artwork_box' ||
+      dom.attributes['node-type'].nodeValue === 'img_box') {
+      return true
+    } else {
+      return false
+    }
+  }
   window.addEventListener('mouseover', e => {
-    if (e.target.tagName == 'IMG' && e.target.parentElement.attributes['node-type'].nodeValue === 'imgSpanBox') {
+    if (e.target.tagName == 'IMG' isWeiboNode(e.target.parentElement) ) {
       if (e.target.parentElement.nextElementSibling && e.target.parentElement.nextElementSibling.className == "hx-download-original-images-tool weibo") {
-        updateLink(e.target.parentElement.nextElementSibling, e.target.src.replace(/mw690/g, 'large'), 'weibo')
+        updateLink(e.target.parentElement.nextElementSibling, e.target.src.replace(/mw\d+/g, 'large'), 'weibo')
       } else {
-        createDom(e.target.parentElement, e.target.src.replace(/mw690/g, 'large'), 'weibo')
+        createDom(e.target.parentElement, e.target.src.replace(/mw\d+/g, 'large'), 'weibo')
       }
     }
   })
