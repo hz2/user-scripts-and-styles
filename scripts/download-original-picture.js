@@ -15,6 +15,8 @@
 // @contributionAmount 5
 // @include     *://medium.com/*
 // @include     *://twitter.com/*
+// @include     *://weibo.com/*
+// @include     *://*.weibo.com/*
 // @compatible firefox 火狐赛高
 // @incompatible firefox 火狐赛高!
 // @noframes
@@ -45,6 +47,10 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
     opacity: .35;
     transform: scale(.75);
     transition: all cubic-bezier(0.18, 0.89, 0.32, 1.28) 250ms;
+}
+.hx-download-original-images-tool.weibo{
+    top: 40px;
+    right: 10px;
 }
 .hx-download-original-images-tool:hover {
     opacity:1;
@@ -104,18 +110,25 @@ const createDomAll = (item, fn) => {
   item.insertAdjacentElement('afterEnd', domDL)
 }
 
+const opendownFn = (e, link) => {
+  e.preventDefault();
+  e.stopPropagation()
+  openDown(link, e)
+}
 
 const createDom = (item, link) => {
   let domDL = document.createElement('a');
   domDL.className = 'hx-download-original-images-tool'
   domDL.title = '下载原始图片'
   domDL.href = link
-  domDL.addEventListener('click', e => {
-    e.preventDefault();
-    e.stopPropagation()
-    openDown(link, e)
-  })
+  // domDL.addEventListener('click', e=>opendownFn(e,link) )
+  domDL.onclick = e => opendownFn(e, link)
   item.insertAdjacentElement('afterEnd', domDL)
+}
+
+const updateLink = (dom, link, type) => {
+  dom.href = link
+  dom.onclick = e => opendownFn(e, link)
 }
 
 if (hostname === "twitter.com") {
@@ -125,6 +138,16 @@ if (hostname === "twitter.com") {
       !(e.target.parentElement.nextElementSibling && e.target.parentElement.nextElementSibling.className == "hx-download-original-images-tool") &&
       !/profile_images|video_thumb/g.test(e.target.src)) {
       createDom(e.target.parentElement, e.target.src.replace(/\&name=\w+/g, '&name=orig'))
+    }
+  })
+} else if (hostname.includes('weibo')) {
+  window.addEventListener('mouseover', e => {
+    if (e.target.tagName == 'IMG' && e.target.parentElement.attributes['node-type'].nodeValue === 'imgSpanBox') {
+      if (e.target.parentElement.nextElementSibling && e.target.parentElement.nextElementSibling.className == "hx-download-original-images-tool weibo") {
+        updateLink(e.target.parentElement.nextElementSibling, e.target.src.replace(/mw690/g, 'large'), 'weibo')
+      } else {
+        createDom(e.target.parentElement, e.target.src.replace(/mw690/g, 'large'), 'weibo')
+      }
     }
   })
 } else if (hostname === "medium.com") {
