@@ -11,6 +11,6 @@ Some user scripts and styles
 
 - Download Original Picture
 
-> supported websites: `medium` , `twitter`
+> supported websites: `medium` , `twitter`, `weibo`
 
 TODO: Add more websites
