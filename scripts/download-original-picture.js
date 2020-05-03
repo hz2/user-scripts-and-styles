@@ -117,9 +117,9 @@ const opendownFn = (e, link) => {
   openDown(link, e)
 }
 
-const createDom = (item, link) => {
+const createDom = (item, link, site) => {
   let domDL = document.createElement('a');
-  domDL.className = 'hx-download-original-images-tool'
+  domDL.className = 'hx-download-original-images-tool + site
   domDL.title = '下载原始图片'
   domDL.href = link
   // domDL.addEventListener('click', e=>opendownFn(e,link) )
@@ -127,7 +127,7 @@ const createDom = (item, link) => {
   item.insertAdjacentElement('afterEnd', domDL)
 }
 
-const updateLink = (dom, link, type) => {
+const updateLink = (dom, link, site) => {
   dom.href = link
   dom.onclick = e => opendownFn(e, link)
 }
