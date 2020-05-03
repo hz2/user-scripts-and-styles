@@ -118,6 +118,7 @@ const opendownFn = (e, link) => {
 }
 
 const createDom = (item, link, site) => {
+    // weibo
   let domDL = document.createElement('a');
   domDL.className = 'hx-download-original-images-tool ' + site
   domDL.title = '下载原始图片'
