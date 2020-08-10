@@ -17,6 +17,7 @@
 // @include     *://twitter.com/*
 // @include     *://weibo.com/*
 // @include     *://*.weibo.com/*
+// @include     *://wallpaperhub.app/*
 // @noframes
 // @grant          unsafeWindow
 // @grant          GM_setClipboard
