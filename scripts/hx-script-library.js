@@ -17,7 +17,9 @@ window.openDown = (url, name ,event) => {
       file.onload = function (e) {
         let el = document.createElement("a");
         el.setAttribute("href", e.target.result);
-        el.setAttribute("download", name )
+        if ( name ) {
+          el.setAttribute("download", name )        
+        }
         if (document.createEvent) {
           var event = document.createEvent("MouseEvents");
           event.initEvent("click", true, true);
