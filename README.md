@@ -19,6 +19,8 @@ Some user scripts and styles
 
 - Download Original Picture
 
-> supported websites: `medium` , `twitter`, `weibo`, `wallpaperhub.app` ( require set CORS )
+> supported websites: `medium` , `twitter`, `weibo`
+
+> supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls.com` 
 
 TODO: Add more websites
