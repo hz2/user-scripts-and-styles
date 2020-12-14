@@ -17,6 +17,7 @@
 // @include     *://twitter.com/*
 // @include     *://weibo.com/*
 // @include     *://*.weibo.com/*
+// @include     *://*.vmgirls.com/*
 // @include     *://wallpaperhub.app/*
 // @noframes
 // @grant          unsafeWindow
@@ -161,6 +162,15 @@ if (hostname === "twitter.com") {
       }
     }
   })
+} else if (hostname === "www.vmgirls.com") {
+  // vmgirls
+   const imgList = [...document.querySelector('.post').querySelectorAll('a')].filter(x=>x.href && x.href.indexOf('static.vmgirls.com/image') !== -1 ).map(x=>x.href)
+    let domDL = document.createElement('a');
+    domDL.className = 'hx-download-original-images-tool '
+    domDL.style ='position: relative;margin-right: 10px;display: inline-block;vertical-align: -20px;'
+    domDL.title = '下载原始图片'
+    domDL.onclick = e => imgList.forEach(x=> opendownFn(e, x) )
+    document.querySelector('.main-submenu').insertAdjacentElement('afterBegin', domDL)
 } else if (hostname === "medium.com") {
   // medium
   document.querySelector('article').querySelectorAll('img').forEach(x => (x.width > 80) && createDomAll(x, src => src.replace(/max\/\d+\//g, 'max/30000/')))
