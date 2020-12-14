@@ -18,6 +18,6 @@
 
 > 支持网站:  `medium` , `twitter`, `weibo`
 
-> 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` , `vmgirls.com` 
+> 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` , `vmgirls` 
 
 TODO: Add more websites
