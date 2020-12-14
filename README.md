@@ -21,6 +21,6 @@ Some user scripts and styles
 
 > supported websites: `medium` , `twitter`, `weibo`
 
-> supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls.com` 
+> supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
 
 TODO: Add more websites
