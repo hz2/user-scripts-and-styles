@@ -77,7 +77,11 @@ const openDown = (url, event) => {
       let file = new FileReader();
       file.onload = function (e) {
         let el = document.createElement("a");
-        el.setAttribute("href", e.target.result);
+        const datastr = e.target.result
+        if ( datastr && datastr.startsWith('<html') ) {
+            return
+        }
+        el.setAttribute("href", datastr);
         let arr = url.split('/')
         el.setAttribute("download", arr[arr.length - 1].replace(/jfif|jpeg/, 'jpg')
           .replace(/\?format=(\w+)\&name=orig/g, (a, b) => `.${b}`) // twittter
