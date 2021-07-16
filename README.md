@@ -19,7 +19,7 @@ Some user scripts and styles
 
 - Download Original Picture
 
-> supported websites: `medium` , `twitter`, `weibo`
+> supported websites: `medium` , `twitter`, `weibo`, `bing` , `edge home`
 
 > supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
 

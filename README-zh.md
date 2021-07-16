@@ -16,7 +16,7 @@
 
 - Download Original Picture / 下载原始图片工具
 
-> 支持网站:  `medium` , `twitter`, `weibo`
+> 支持网站:  `medium` , `twitter`, `weibo`, `bing` , `edge home`
 
 > 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` , `vmgirls` 
 
