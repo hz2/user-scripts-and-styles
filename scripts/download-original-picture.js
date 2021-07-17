@@ -44,8 +44,6 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
     width: 50px;
     height: 50px;
     cursor: pointer;
-    margin-left: 10px;
-    margin-top: 10px;
     opacity: .35;
     transform: scale(.75);
     transition: all cubic-bezier(0.18, 0.89, 0.32, 1.28) 250ms;
@@ -54,11 +52,6 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
     background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9ImluaGVyaXQiIGltcGxpY2l0LWNvbnNlbnQtc291cmNlPSJ0cnVlIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEuMDEyMiAwIDAgMS4wMTIyIC0yOC42ODQgLTMuNDMzOSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjMiPgogIDxjaXJjbGUgY3g9IjQwLjE5NCIgY3k9IjE1LjI0OCIgcj0iOC45ODI0Ii8+CiAgPHBhdGggZD0ibTQ1IDE3LTQuNTMzIDMuNTQ3Yy0wLjE2NjU5IDAuMTMwMzUtMC4zODQ2MSAwLjE0OTU3LTAuNTM0MTggMGwtNC41NjY0LTMuNTQ3Yy0wLjIzNTA0LTAuMjM1MDQtMC4wNjQxLTAuNjQxMDIgMC4yNTY0MS0wLjY0MTAyaDIuNDM2MmMwLjIxMzY3IDAgMC4zODQ2MS0wLjE3MDk0IDAuMzg0NjEtMC4zODQ2MXYtNS43MzI5YzAtMC4yMTM2NyAwLjE3MDk0LTAuMzg0NjEgMC4zODQ2MS0wLjM4NDYxaDIuNzAzNmMwLjIxMzY3IDAgMC4zODQ2MSAwLjE3MDk0IDAuMzg0NjEgMC4zODQ2MXY1LjczMjljMCAwLjIxMzY3IDAuMTcwOTQgMC4zODQ2MSAwLjM4NDYxIDAuMzg0NjFoMi40NjM5YzAuMjk5MTQgMCAwLjQ5NjgyIDAuNDM2MTggMC4yMzUwNCAwLjY0MTAyeiIvPgogPC9nPgo8L3N2Zz4K);
     width: 24px;
     height: 24px;
-    background-size: cover;
-}
-.hx-download-original-images-tool.weibo{
-    top: 40px;
-    right: 10px;
 }
 .hx-download-original-images-tool:hover {
     opacity:1;
@@ -73,35 +66,8 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
 
 const hostname = window.location.hostname
 
-const openDown = (url, event, name) => {
-  event &&　event.preventDefault();
-  event &&　event.stopPropagation()
-  fetch(url, {
-      mode: "cors"
-    })
-    .then(function (response) {
-      return response.blob();
-    })
-    .then(r => {
-      const blobUrl = URL.createObjectURL(r)
-      let el = document.createElement("a");
-      el.setAttribute("href", blobUrl);
-      let arr = url.split('/')
-      el.setAttribute("download", name || arr[arr.length - 1].replace(/jfif|jpeg/, 'jpg')
-        .replace(/\?format=(\w+)\&name=orig/g, (a, b) => `.${b}`) // twittter
-      )
-      if (document.createEvent) {
-        var event = document.createEvent("MouseEvents");
-        event.initEvent("click", true, true);
-        el.dispatchEvent(event);
-      } else {
-        el.click();
-      }
-    })
-    .catch(function (error) {
-      console.log("Request failed", error);
-    });
-}
+const lastItem = arr => arr.length ? arr[arr.length - 1] : ''
+
 const createDomAll = (item, fn) => {
   let domDL = document.createElement('a');
   domDL.className = 'hx-download-original-images-tool'
@@ -110,63 +76,95 @@ const createDomAll = (item, fn) => {
   item.addEventListener('load', _ => {
     let link = fn(item.src)
     domDL.href = link
-    domDL.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation()
-      openDown(link, e)
-    })
+    domDL.addEventListener('click', e => openDown(link, e))
   })
   item.insertAdjacentElement('afterEnd', domDL)
 }
 
-const opendownFn = (e, link, name) => {
-  e.preventDefault();
-  e.stopPropagation()
-  openDown(link, e, name)
-}
+const createDom = (cfg) => {
+  const {
+    parent,
+    link,
+    name,
+    className = '',
+    style = '',
+    postion = 'afterEnd'
+  } = cfg
 
-const createDom = (item, link, site) => {
-  // weibo
   let domDL = document.createElement('a');
-  domDL.className = 'hx-download-original-images-tool ' + site
-  domDL.title = '下载原始图片'
-  domDL.href = link
-  // domDL.addEventListener('click', e=>opendownFn(e,link) )
-  domDL.onclick = e => opendownFn(e, link)
-  item.insertAdjacentElement('afterEnd', domDL)
+  Object.assign(domDL, {
+    title: '下载原始图片',
+    className: 'hx-download-original-images-tool ' + className,
+    style: style,
+    href: link,
+  })
+  const newName = name || lastItem(link.split('/'))
+  domDL.onclick = e => openDown(link, e, newName)
+  const next = parent && parent.nextElementSibling
+  if (next && next.className.includes('hx-download-original-images-tool')) {
+    next = domDL
+  } else {
+    parent.insertAdjacentElement(postion, domDL)
+  }
 }
 
-const updateLink = (dom, link, site) => {
+const updateLink = (dom, link) => {
   dom.href = link
-  dom.onclick = e => opendownFn(e, link)
+  const newName = lastItem(link.split('/'))
+  dom.onclick = e => openDown(link, e, newName)
 }
 
 const init = () => {
 
   if (hostname === "twitter.com" || hostname === "mobile.twitter.com") {
     //twitter
-    window.addEventListener('mouseover', e => {
-      if (e.target.tagName == 'IMG' &&
-        !(e.target.parentElement.nextElementSibling && e.target.parentElement.nextElementSibling.className == "hx-download-original-images-tool") &&
-        !/profile_images|video_thumb/g.test(e.target.src)) {
-        createDom(e.target.parentElement, e.target.src.replace(/\&name=\w+/g, '&name=orig'))
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const src = target && target.src
+      const parent = target.parentElement
+      const next = parent && parent.nextElementSibling
+      if (target.tagName == 'IMG' &&
+        !(next && next.className.includes('hx-download-original-images-tool')) &&
+        !/profile_images|video_thumb/g.test(src)) {
+        const link = src.replace(/\&name=\w+/g, '&name=orig')
+        const name = lastItem(link.split('/')).replace(/\?format=(\w+)\&name=orig/g, (_, b) => `.${b}`)
+        const style = 'margin-left: 10px;margin-top: 10px;'
+        const cfg = {
+          parent,
+          link,
+          name,
+          style
+        }
+        createDom(cfg)
       }
     })
   } else if (hostname.includes('weibo')) {
     const isWeiboNode = dom => {
-      if (dom.parentElement.attributes['node-type'].nodeValue === 'artwork_box' ||
-        dom.attributes['node-type'].nodeValue === 'img_box') {
+      const getNodeValue = el => el.attributes['node-type'] && el.attributes['node-type'].nodeValue
+      if (getNodeValue(dom.parentElement) === 'artwork_box' || getNodeValue(dom) === 'img_box' || dom.className.includes('woo-picture-main') || dom.className.includes('woo-picture-slot') || dom.className.includes('imgInstance')) {
         return true
       } else {
         return false
       }
     }
-    window.addEventListener('mouseover', e => {
-      if (e.target.tagName == 'IMG' && isWeiboNode(e.target.parentElement)) {
-        if (e.target.parentElement.nextElementSibling && e.target.parentElement.nextElementSibling.className == "hx-download-original-images-tool weibo") {
-          updateLink(e.target.parentElement.nextElementSibling, e.target.src.replace(/mw\d+/g, 'large'), 'weibo')
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const parent = target.parentElement
+      const next = parent && parent.nextElementSibling
+      if (target.tagName == 'IMG' && isWeiboNode(parent)) {
+        const link = target.src.replace(/orj\d+|mw\d+/g, 'large')
+        if (next && next.className.includes('hx-download-original-images-tool')) {
+          updateLink(next, link)
         } else {
-          createDom(e.target.parentElement, e.target.src.replace(/mw\d+/g, 'large'), 'weibo')
+          const style = 'top: 40px;right: 10px;'
+          const cfg = {
+            parent,
+            link,
+            style
+          }
+          createDom(cfg)
         }
       }
     })
@@ -177,9 +175,14 @@ const init = () => {
     domDL.style = 'position: relative;margin-right: 10px;display: inline-block;vertical-align: -20px;'
     domDL.title = '下载原始图片'
     domDL.onclick = e => {
-      const imgList = [...document.querySelector('.post').querySelectorAll('a')].filter(x => x.href && x.href.indexOf('static.vmgirls.com/image') !== -1).map(x => x.href)
+      const list1 = [...document.querySelector('.post').querySelectorAll('a')].filter(x => x.href && x.href.indexOf('static.vmgirls.com/image') !== -1)
+      const list2 = [...document.querySelector('.post-content').querySelectorAll('a')].filter(x => x.href && x.href.indexOf('t.cdn.ink/image') !== -1)
+      const imgList = [...list1, ...list2].map((x, i) => ({
+        link: x.href && x.href.replace('-scaled', ''),
+        name: `${x.alt || x.title}_${i}`
+      }))
       domDL.title += ' ' + imgList.length
-      imgList.forEach(x => opendownFn(e, x))
+      imgList.forEach(x => openDown(x.link, e, x.name))
     }
     document.querySelector('.main-submenu').insertAdjacentElement('afterBegin', domDL)
   } else if (hostname === "medium.com") {
@@ -187,51 +190,64 @@ const init = () => {
     document.querySelector('article').querySelectorAll('img').forEach(x => (x.width > 80) && createDomAll(x, src => src.replace(/max\/\d+\//g, 'max/30000/')))
   } else if (hostname === "wallpaperhub.app") {
     // wallpaperhub
-    const odom = document.querySelector('.downloadButton')
-    if (odom) {
-      let link0 = odom.href.split('downloadUrl=')[1]
-      const link = link0
-      let domDL = document.createElement('a');
-      domDL.className = 'hx-download-original-images-tool '
-      domDL.style = 'position: relative;margin-right: 10px;display: inline-block;vertical-align: -20px;'
-      domDL.title = '下载原始图片'
-      domDL.href = link
-      domDL.onclick = e => opendownFn(e, link)
-      odom.parentElement.parentElement.insertAdjacentElement('beforeBegin', domDL)
-    }
+    const odomList = [...document.querySelectorAll('.downloadButton')]
+    odomList.forEach(odom => {
+      if (odom) {
+        let link0 = odom.href.split('downloadUrl=')[1]
+        const link = link0
+        const style = 'position: relative;margin-right: 10px;display: inline-block;vertical-align: -20px;'
+        const cfg = {
+          parent: odom.parentElement.parentElement,
+          link,
+          style,
+          postion: 'beforeBegin'
+        }
+        console.log('cdf,', cfg);
+
+        createDom(cfg)
+      }
+    })
   } else if (hostname === "ntp.msn.cn") {
     // edge 首页
     const link = document.querySelector('background-image')._imageSource;
-    let domDL = document.createElement('a');
-    domDL.className = 'hx-download-original-images-tool white'
-    domDL.style = 'position: fixed;right: 80px;top: 40px;'
-    domDL.title = '下载原始图片'
-    domDL.href = link
-    domDL.onclick = e => opendownFn(e, link)
-    document.body.insertAdjacentElement('beforeBegin', domDL)
+    const style = 'position: fixed;right: 80px;top: 40px;'
+    const cfg = {
+      parent: document.body,
+      link,
+      className: 'white',
+      style,
+      postion: 'beforeBegin'
+    }
+    createDom(cfg)
   } else if (hostname === "www.bing.com") {
     // bing 首页
     const orig = document.querySelector('[style*="th?id="]').style.backgroundImage
     const link = orig.match(/th\?id\=[\w\d\.\-\_]+/g)[0].replace('1920x1080', 'UHD')
     const name = link && link.split('=')[1]
-    let domDL = document.createElement('a');
-    domDL.className = 'hx-download-original-images-tool white'
-    domDL.style = 'position: relative;width: 42px;height: 42px;margin: 0;opacity: .9;'
-    domDL.title = '下载原始图片'
-    domDL.href = link
-    domDL.onclick = e => opendownFn(e, link, name)
-    document.querySelector('#idCont').insertAdjacentElement('afterBegin', domDL)
+    const style = 'position: relative;width: 42px;height: 42px;margin: 0;opacity: .9;'
+    const cfg = {
+      parent: document.querySelector('#id_h'),
+      link,
+      name,
+      className: 'white',
+      style,
+      postion: 'afterBegin'
+    }
+    createDom(cfg)
   } else if (hostname === "cn.bing.com") {
     // bing 首页
     const link = document.querySelector('#bgImgProgLoad').dataset.ultraDefinitionSrc.split('&')[0];
     const name = link && link.split('=')[1]
-    let domDL = document.createElement('a');
-    domDL.className = 'hx-download-original-images-tool white'
-    domDL.style = 'position: fixed;right: 225px;bottom: 53px;margin: 0px;width: 64px;height: 64px;z-index: 550;opacity: .9;'
-    domDL.title = '下载原始图片'
-    domDL.href = link
-    domDL.onclick = e => opendownFn(e, link, name)
-    document.body.insertAdjacentElement('beforeBegin', domDL)
+    const style = 'position: fixed;right: 225px;bottom: 53px;margin: 0px;width: 64px;height: 64px;z-index: 550;opacity: .9;'
+    const cfg = {
+      parent: document.body,
+      link,
+      name,
+      className: 'white',
+      style,
+      postion: 'beforeBegin'
+    }
+    createDom(cfg)
   }
 
 }
