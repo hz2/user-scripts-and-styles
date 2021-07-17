@@ -29,6 +29,3 @@ const openDown = (url, e, name) => {
       console.log("Request failed", err);
     });
 }
-
-window.hxOpenDown = openDown
-window.openDown = openDown
