@@ -175,14 +175,20 @@ const init = () => {
     domDL.style = 'position: relative;margin-right: 10px;display: inline-block;vertical-align: -20px;'
     domDL.title = '下载原始图片'
     domDL.onclick = e => {
-      const list1 = [...document.querySelector('.post').querySelectorAll('a')].filter(x => x.href && x.href.indexOf('static.vmgirls.com/image') !== -1)
-      const list2 = [...document.querySelector('.post-content').querySelectorAll('a')].filter(x => x.href && x.href.indexOf('t.cdn.ink/image') !== -1)
+      const list1 = [...document.querySelector('.post').querySelectorAll('a')].filter(x => x.src && x.src.indexOf('static.vmgirls.com/image') !== -1)
+      const list2 = [...document.querySelector('.post-content').querySelectorAll('img')].filter(x => x.src && x.src.indexOf('t.cdn.ink/image') !== -1)
       const imgList = [...list1, ...list2].map((x, i) => ({
-        link: x.href && x.href.replace('-scaled', ''),
-        name: `${x.alt || x.title}_${i}`
+        link: x.src && x.src.replace('-scaled', ''),
+        name: `${x.alt || x.title}_${i}.jpg`
       }))
-      domDL.title += ' ' + imgList.length
+      domDL.title += ' ' + imgList.length 
       imgList.forEach(x => openDown(x.link, e, x.name))
+      const link1 = imgList.map(x =>  x.link).join('\n')
+      const link2 = imgList.map(x =>  `aria2c -o ${x.name} ${x.link}`).join('\n')
+      const content = `<html><head><meta charset="utf-8"><title>获取链接</title></head><body><textarea style="width: 850px; height: 250px; margin: 30px;">${link1}</textarea>
+      <textarea style="width: 850px; height: 250px; margin: 30px;">${link2}</textarea>
+      </body></html>`      
+      window.open(URL.createObjectURL(new Blob([content], {type : 'text/html'})))
     }
     document.querySelector('.main-submenu').insertAdjacentElement('afterBegin', domDL)
   } else if (hostname === "medium.com") {
@@ -202,8 +208,6 @@ const init = () => {
           style,
           postion: 'beforeBegin'
         }
-        console.log('cdf,', cfg);
-
         createDom(cfg)
       }
     })
