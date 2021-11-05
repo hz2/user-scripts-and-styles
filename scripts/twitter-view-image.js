@@ -12,19 +12,20 @@
 // ==/UserScript==
 
 
-const init = ()=> {
+const init = () => {
 
-    window.addEventListener('mouseover', ({
-      target
-    }) => {
-      const src = target && target.src
-      const parent = target.parentElement
-      const dom = parent.querySelector('[role="link"] img') || {}
+  window.addEventListener('mouseover', ({
+    target
+  }) => {
+    const parent = target.parentElement
+    if (target.tagName == 'IMG' && parent.dataset ? .testid === "tweetPhoto") {
+      const dom = target || {}
       const link = dom.src || ''
+      console.log('parent, ', link)
 
-      console.log('parent, ',link  )
+    }
 
-    })
+  })
 }
 
 
