@@ -18,7 +18,7 @@ const init = () => {
     target
   }) => {
     const parent = target.parentElement
-    if (target.tagName == 'IMG' && parent.dataset ? .testid === "tweetPhoto") {
+    if (target.tagName == 'IMG' && parent.dataset?.testid === "tweetPhoto") {
       const dom = target || {}
       const link = dom.src || ''
       console.log('parent, ', link)
