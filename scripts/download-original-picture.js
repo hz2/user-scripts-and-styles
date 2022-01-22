@@ -24,6 +24,13 @@
 // @include     *://*.msn.cn/*
 // @include     *://instagram.com/*
 // @include     *://*.instagram.com/*
+// @include     *://instagram.com/*
+// @include     *://*.instagram.com/*
+// @include     *://tiktok.com/*
+// @include     *://*.tiktok.com/*
+// @include     *://douyin.com/*
+// @include     *://*.douyin.com/*
+
 // @noframes
 // @grant          unsafeWindow
 // @grant          GM_setClipboard
@@ -138,19 +145,26 @@ const createDom = (cfg) => {
     postion = 'afterEnd'
   } = cfg
 
-  let domDL = document.createElement('a');
-  Object.assign(domDL, {
-    title: '下载原始图片',
-    className: 'hx-download-original-images-tool ' + className,
-    style: style,
-    href: link,
-  })
+  const genDomDL = (dom) => {
+    let domDL = dom || document.createElement('a');
+    Object.assign(domDL, {
+      title: '下载原始图片',
+      className: 'hx-download-original-images-tool ' + className,
+      style: style,
+      href: link,
+    })
+    domDL.onclick = e => {
+      e && e.preventDefault();
+      e && e.stopPropagation()
+      const newName = name || lastItem(link.split('/'))
+      openDown(link, e, newName)
+    }
+    return domDL
+  }
 
-  domDL.onclick = e => {
-    e && e.preventDefault();
-    e && e.stopPropagation()
-    const newName = name || lastItem(link.split('/'))
-    openDown(link, e, newName)
+  let parent2 = parent
+  if (!parent && target) {
+    parent2 = target.parentElement
   }
 
   let sibling = null
@@ -159,15 +173,15 @@ const createDom = (cfg) => {
   } else if (postion === 'beforeEnd') {
     sibling = target && target.nextElementSibling
   } else if (postion === 'beforeBegin') {
-    sibling = parent && parent.nextElementSibling
+    sibling = parent2 && parent2.nextElementSibling
   } else if (postion === 'afterEnd') {
-    sibling = parent && parent.nextElementSibling
+    sibling = parent2 && parent2.nextElementSibling
   }
 
   if (sibling && sibling.className.includes('hx-download-original-images-tool')) {
-    sibling = domDL
+    genDomDL(sibling)
   } else {
-    parent.insertAdjacentElement(postion, domDL)
+    parent2.insertAdjacentElement(postion, genDomDL())
   }
 }
 
@@ -318,7 +332,6 @@ const init = () => {
     }
     createDom(cfg)
   } else if (hostname === "www.instagram.com") {
-    console.log('hostname', hostname)
     window.addEventListener('mouseover', ({
       target
     }) => {
@@ -339,6 +352,64 @@ const init = () => {
           postion: 'beforeEnd'
         }
         createDom(cfg)
+      }
+    })
+  } else if (hostname === "www.tiktok.com") {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      if (target.tagName == 'VIDEO') {
+        const src = target.src
+        const parent = target.parentElement
+        const link = src
+        const style = 'left: 10px;top: 10px;'
+        const cfg = {
+          parent,
+          link,
+          style,
+          target,
+          name: lastItem(src.split('?')[0].split('/').filter(x => x)),
+          postion: 'beforeEnd'
+        }
+        createDom(cfg)
+      }
+    })
+  } else if (hostname === "www.douyin.com") {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      // if (target && target.tagName === 'VIDEO') {
+      //   const src = (target.querySelector('source') || target).src
+      //   const link = src
+      //   const style = 'left: 10px;top: 10px;'
+      //   const cfg = {
+      //     link,
+      //     style,
+      //     target,
+      //     postion: 'afterEnd',
+      //     name: lastItem(src.split('?')[0].split('/').filter(x => x)),
+      //   }
+      //   createDom(cfg)
+      //   return
+      // } else 
+      if (target && target.parentElement) {
+        const container = target.parentElement.parentElement || {
+          className: ''
+        }
+        if (container && container.className.includes('videoContainer') && container.querySelector('video')) {
+          const src = (container.querySelector('source') || container.querySelector('video')).src
+          const link = src
+          const style = 'left: 10px;top: 10px;'
+          const cfg = {
+            link,
+            style,
+            target: container,
+            postion: 'beforeEnd',
+            name: lastItem(src.split('?')[0].split('/').filter(x => x)),
+          }
+          createDom(cfg)
+        }
+
       }
     })
   }
