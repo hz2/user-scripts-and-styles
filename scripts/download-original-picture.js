@@ -22,6 +22,8 @@
 // @include     *://wallpaperhub.app/*
 // @include     *://*.bing.com/*
 // @include     *://*.msn.cn/*
+// @include     *://instagram.com/*
+// @include     *://*.instagram.com/*
 // @noframes
 // @grant          unsafeWindow
 // @grant          GM_setClipboard
@@ -45,6 +47,7 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
     height: 50px;
     cursor: pointer;
     opacity: .35;
+    z-index: 50000;
     transform: scale(.75);
     transition: all cubic-bezier(0.18, 0.89, 0.32, 1.28) 250ms;
 }
@@ -65,28 +68,42 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
 
 
 console.warn('Welcome to %c \ud83d\ude48\ud83d\ude49\ud83d\ude4a\u0020\u0048\u007a\u00b2\u0020\u0053\u0063\u0072\u0069\u0070\u0074\u0020\u004c\u0069\u0062\u0072\u0061\u0072\u0079 %c v0.06 ', 'background-color:teal;color: white;border:1px solid teal;border-radius: 4px 0 0 4px;border-left-width:0;padding:1px;margin:2px 0;font-size:1.1em', 'background-color:#777;color: white;border:1px solid #777;border-radius: 0 4px 4px 0;border-right-width:0;padding:1px;margin:5px 0;');
- 
+
 const openDown = (url, e, name) => {
   e && e.preventDefault();
   e && e.stopPropagation()
+
+
+  const downBlobUrl = (blobUrl) => {
+    let el = document.createElement("a");
+    el.setAttribute("href", blobUrl);
+    if (name) {
+      el.setAttribute("download", name)
+    }
+    if (document.createEvent) {
+      const event = document.createEvent("MouseEvents");
+      event.initEvent("click", true, true);
+      el.dispatchEvent(event);
+    } else {
+      el.click();
+    }
+
+  }
+
+  if (url.startsWith('blob')) {
+    downBlobUrl(url)
+    return
+
+  }
+
+
   fetch(url, {
       mode: "cors"
     })
     .then(resp => resp.blob())
     .then(r => {
       const blobUrl = URL.createObjectURL(r)
-      let el = document.createElement("a");
-      el.setAttribute("href", blobUrl);
-      if (name) {
-        el.setAttribute("download", name)
-      }
-      if (document.createEvent) {
-        const event = document.createEvent("MouseEvents");
-        event.initEvent("click", true, true);
-        el.dispatchEvent(event);
-      } else {
-        el.click();
-      }
+      downBlobUrl(blobUrl)
     })
     .catch(err => {
       console.log("Request failed", err);
@@ -117,6 +134,7 @@ const createDom = (cfg) => {
     name,
     className = '',
     style = '',
+    target,
     postion = 'afterEnd'
   } = cfg
 
@@ -127,11 +145,27 @@ const createDom = (cfg) => {
     style: style,
     href: link,
   })
-  const newName = name || lastItem(link.split('/'))
-  domDL.onclick = e => openDown(link, e, newName)
-  const next = parent && parent.nextElementSibling
-  if (next && next.className.includes('hx-download-original-images-tool')) {
-    next = domDL
+
+  domDL.onclick = e => {
+    e && e.preventDefault();
+    e && e.stopPropagation()
+    const newName = name || lastItem(link.split('/'))
+    openDown(link, e, newName)
+  }
+
+  let sibling = null
+  if (postion === 'afterBegin') {
+    sibling = target && target.previousElementSibling
+  } else if (postion === 'beforeEnd') {
+    sibling = target && target.nextElementSibling
+  } else if (postion === 'beforeBegin') {
+    sibling = parent && parent.nextElementSibling
+  } else if (postion === 'afterEnd') {
+    sibling = parent && parent.nextElementSibling
+  }
+
+  if (sibling && sibling.className.includes('hx-download-original-images-tool')) {
+    sibling = domDL
   } else {
     parent.insertAdjacentElement(postion, domDL)
   }
@@ -210,14 +244,16 @@ const init = () => {
         link: x.src && x.src.replace('-scaled', ''),
         name: `${x.alt || x.title}_${i}.jpg`
       }))
-      domDL.title += ' ' + imgList.length 
+      domDL.title += ' ' + imgList.length
       imgList.forEach(x => openDown(x.link, e, x.name))
-      const link1 = imgList.map(x =>  x.link).join('\n')
-      const link2 = imgList.map(x =>  `aria2c -o ${x.name} ${x.link}`).join('\n')
+      const link1 = imgList.map(x => x.link).join('\n')
+      const link2 = imgList.map(x => `aria2c -o ${x.name} ${x.link}`).join('\n')
       const content = `<html><head><meta charset="utf-8"><title>获取链接</title></head><body><textarea style="width: 850px; height: 250px; margin: 30px;">${link1}</textarea>
       <textarea style="width: 850px; height: 250px; margin: 30px;">${link2}</textarea>
-      </body></html>`      
-      window.open(URL.createObjectURL(new Blob([content], {type : 'text/html'})))
+      </body></html>`
+      window.open(URL.createObjectURL(new Blob([content], {
+        type: 'text/html'
+      })))
     }
     document.querySelector('.main-submenu').insertAdjacentElement('afterBegin', domDL)
   } else if (hostname === "medium.com") {
@@ -281,6 +317,30 @@ const init = () => {
       postion: 'beforeBegin'
     }
     createDom(cfg)
+  } else if (hostname === "www.instagram.com") {
+    console.log('hostname', hostname)
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const el = target.previousElementSibling
+      const el2 = target.parentElement
+      const img = (el && el.querySelector('img:not([data-testid])') || el2 && el2.querySelector('video:not([data-testid])'))
+      if (img) {
+        const src = img.src
+        const parent = img.parentElement
+        const link = src
+        const style = 'left: 10px;top: 10px;'
+        const cfg = {
+          parent,
+          link,
+          style,
+          target: img,
+          name: img.alt ? (img.alt + '.jpg') : src.split(/[\?\/]/g).filter(x => x.endsWith('.jpg'))[0],
+          postion: 'beforeEnd'
+        }
+        createDom(cfg)
+      }
+    })
   }
 
 }
