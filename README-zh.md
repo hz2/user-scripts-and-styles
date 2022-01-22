@@ -14,10 +14,32 @@
 
 ## Scripts 脚本
 
-- Download Original Picture / 下载原始图片工具
+### 1、Download Original Picture / 下载原始图片工具
 
 > 支持网站:  `medium` , `twitter`, `weibo`, `bing` , `edge home`
 
 > 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` , `vmgirls` 
 
-TODO: Add more websites
+> *最新支持*  
+- `instagram` ( 图片和部分视频 )
+- `tiktok`, `douyin`, `kuaishou` ( 视频 )
+- `xiaohongshu` ( 图片 )
+
+
+
+| 网站 | 图片 | 视频 | 备注 |
+| --- | --- | --- | --- |
+| `medium` | ✅ | - | - |
+| `twitter` | ✅ | - | - |
+| `weibo` | ✅ | - | - |
+| `bing` | ✅ | - | - |
+| `wallpaperhub.app` | ✅ | - | 跨域 |
+| `vmgirls` | ✅ | - | 跨域 |
+| `instagram` | ✅ | 🔘 (部分) | *新* |
+| `tiktok` | - | ✅ | *新* |
+| `douyin` | - | ✅ | *新* |
+| `kuaishou` | - | ✅ | *新* |
+| `xiaohongshu` | ✅ | - | *新* |
+
+
+### TODO: Add more websites

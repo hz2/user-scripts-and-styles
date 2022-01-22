@@ -17,10 +17,33 @@ Some user scripts and styles
 
 ## Scripts
 
-- Download Original Picture
+### (1) Download Original Picture
 
 > supported websites: `medium` , `twitter`, `weibo`, `bing` , `edge home`
 
 > supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
+
+> *new supported* 
+- `instagram` ( photos and some videos )
+- `tiktok`, `douyin`, `kuaishou` ( videos )
+- `xiaohongshu` ( photos )
+
+
+
+| website | photo | video | remark |
+| --- | --- | --- | --- |
+| `medium` | ✅ | - | - |
+| `twitter` | ✅ | - | - |
+| `weibo` | ✅ | - | - |
+| `bing` | ✅ | - | - |
+| `wallpaperhub.app` | ✅ | - | CORS |
+| `vmgirls` | ✅ | - | CORS |
+| `instagram` | ✅ | 🔘 (some) | *new* |
+| `tiktok` | - | ✅ | *new* |
+| `douyin` | - | ✅ | *new* |
+| `kuaishou` | - | ✅ | *new* |
+| `xiaohongshu` | ✅ | - | *new* |
+
+
 
 TODO: Add more websites
