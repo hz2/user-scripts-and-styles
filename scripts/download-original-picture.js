@@ -28,10 +28,9 @@
 // @include     *://*.instagram.com/*
 // @include     *://tiktok.com/*
 // @include     *://*.tiktok.com/*
-// @include     *://douyin.com/*
 // @include     *://*.douyin.com/*
-// @include     *://kuaishou.com/*
 // @include     *://*.kuaishou.com/*
+// @include     *://*.xiaohongshu.com/*
 
 // @noframes
 // @grant          unsafeWindow
@@ -168,20 +167,12 @@ const createDom = (cfg) => {
   if (!parent && target) {
     parent2 = target.parentElement
   }
-
-  let sibling = null
-  if (postion === 'afterBegin') {
-    sibling = target && target.previousElementSibling
-  } else if (postion === 'beforeEnd') {
-    sibling = target && target.nextElementSibling
-  } else if (postion === 'beforeBegin') {
-    sibling = parent2 && parent2.nextElementSibling
-  } else if (postion === 'afterEnd') {
-    sibling = parent2 && parent2.nextElementSibling
+  if (['afterEnd', 'beforeBegin'].includes(postion)) {
+    parent2 = target.parentElement.parentElement
   }
-
-  if (sibling && sibling.className.includes('hx-download-original-images-tool')) {
-    genDomDL(sibling)
+  const exist = parent2.querySelector('.hx-download-original-images-tool')
+  if (exist) {
+    genDomDL(exist)
   } else {
     parent2.insertAdjacentElement(postion, genDomDL())
   }
@@ -437,6 +428,28 @@ const init = () => {
         }
 
       }
+    })
+  } else if (hostname === "www.xiaohongshu.com") {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const container = target && target.parentElement
+      if (container && container.className && container.className.includes('carousel')) {
+        const inner = container.querySelector('li:not([style*=none]) .inner')
+        const src = inner && inner.style['background-image'].replace(/^url\(\"|\"\)$/g, '')
+        const link = src
+        const style = 'left: 10px;top: 10px;'
+        const cfg = {
+          link,
+          style,
+          parent: container,
+          postion: 'beforeEnd',
+          name: lastItem(src.split('?')[0].split('/').filter(x => x)) + '.jpg',
+        }
+        createDom(cfg)
+      }
+
+
     })
   }
 
