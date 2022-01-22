@@ -30,6 +30,8 @@
 // @include     *://*.tiktok.com/*
 // @include     *://douyin.com/*
 // @include     *://*.douyin.com/*
+// @include     *://kuaishou.com/*
+// @include     *://*.kuaishou.com/*
 
 // @noframes
 // @grant          unsafeWindow
@@ -397,6 +399,30 @@ const init = () => {
           className: ''
         }
         if (container && container.className.includes('videoContainer') && container.querySelector('video')) {
+          const src = (container.querySelector('source') || container.querySelector('video')).src
+          const link = src
+          const style = 'left: 10px;top: 10px;'
+          const cfg = {
+            link,
+            style,
+            target: container,
+            postion: 'beforeEnd',
+            name: lastItem(src.split('?')[0].split('/').filter(x => x)),
+          }
+          createDom(cfg)
+        }
+
+      }
+    })
+  } else if (hostname === "www.kuaishou.com") {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      if (target && target.parentElement) {
+        const container = target.parentElement.parentElement || {
+          className: ''
+        }
+        if (container && container.className.includes('kwai-player') && container.querySelector('video')) {
           const src = (container.querySelector('source') || container.querySelector('video')).src
           const link = src
           const style = 'left: 10px;top: 10px;'
