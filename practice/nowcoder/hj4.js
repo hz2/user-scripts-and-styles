@@ -16,3 +16,24 @@ while (line = readline()) {
     print(arr.splice(0, 8).join(''))
   }
 }
+
+
+// solution 3
+
+while (line = readline()) {
+  let a = line.concat('0000000');
+  let i = 0;
+  while (a.length > i + 7) {
+    print('' + a[i] + a[i + 1] + a[i + 2] + a[i + 3] + a[i + 4] + a[i + 5] + a[i + 6] + a[i + 7])
+    i += 8
+  }
+}
+
+while (line = readline()) {
+  let a = line.concat('0000000');
+  let i = 0;
+  while (a.length > i + 7) {
+    print(a.substring(i, i + 8))
+    i += 8
+  }
+}
