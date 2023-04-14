@@ -31,6 +31,8 @@
 // @include     *://*.douyin.com/*
 // @include     *://*.kuaishou.com/*
 // @include     *://*.xiaohongshu.com/*
+// @match     *://nijijourney.com/*
+// @match     *://*.midjourney.com/*
 
 // @noframes
 // @grant          unsafeWindow
@@ -120,7 +122,7 @@ const openDown = (url, e, name) => {
 
 const hostname = window.location.hostname
 
-const lastItem = arr => arr.length ? arr[arr.length - 1] : ''
+const lastItem = (arr, index = 0) => arr.length ? arr[arr.length - 1 - index] : ''
 
 const createDomAll = (item, fn) => {
   let domDL = document.createElement('a');
@@ -143,7 +145,8 @@ const createDom = (cfg) => {
     className = '',
     style = '',
     target,
-    postion = 'afterEnd'
+    postion = 'afterEnd',
+    linkArr
   } = cfg
 
   const genDomDL = (dom) => {
@@ -158,7 +161,14 @@ const createDom = (cfg) => {
       e && e.preventDefault();
       e && e.stopPropagation()
       const newName = name || lastItem(link.split('/'))
-      openDown(link, e, newName)
+      if (linkArr) {
+        linkArr.forEach(({
+          link,
+          name
+        }) => openDown(link, e, name))
+      } else {
+        openDown(link, e, newName);
+      }
     }
     return domDL
   }
@@ -445,6 +455,40 @@ const init = () => {
           parent: container,
           postion: 'beforeEnd',
           name: lastItem(src.split('?')[0].split('/').filter(x => x)) + '.jpg',
+        }
+        createDom(cfg)
+      }
+
+
+    })
+  } else if (hostname === "nijijourney.com" || hostname === 'www.midjourney.com') {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const container = target && target.parentElement && target.parentElement.parentElement
+      if (container) {
+        const inner = container.querySelector('link')
+        const src = inner && inner.href.replace('_32_N.webp', '.webp')
+        const link = src || ''
+        const style = 'left: 10px;top: 10px;'
+        const baseName = lastItem(link.split(/[\/\?]/), 1);
+        let linkArr = []
+        //linkArr.forEach(({ link, name}
+        const linkCount = lastItem(link.split(/[\.\_\/]/), 1)
+        const cfg = {
+          link,
+          style,
+          parent: container,
+          postion: 'beforeEnd',
+          name: baseName,
+        }
+        if (Number(linkCount) > 0) {
+          cfg.linkArr = Array.from({
+            length: Number(linkCount) + 1
+          }).map((x, i) => ({
+            link: link.replace(/(\d).webp$/, i + '.webp'),
+            name: baseName + '_' + i
+          }))
         }
         createDom(cfg)
       }

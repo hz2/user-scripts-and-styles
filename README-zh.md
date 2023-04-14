@@ -21,9 +21,7 @@
 > 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` , `vmgirls` 
 
 > *最新支持*  
-- `instagram` ( 图片和部分视频 )
-- `tiktok`, `douyin`, `kuaishou` ( 视频 )
-- `xiaohongshu` ( 图片 )
+- 增加 AIGC网站 `midjourney` ( 图片 )
 
 
 
@@ -39,7 +37,9 @@
 | `tiktok` | - | ✅ | *新* |
 | `douyin` | - | ✅ | *新* |
 | `kuaishou` | - | ✅ | *新* |
-| `xiaohongshu` | ✅ | - | *新* |
+| `xiaohongshu` | ✅ | - | *失效* 🚧 |
+| `midjourney` | ✅ | - | *新* 🤖 |
+| `nijijourney` | ✅ | - | *新* 🤖 |
 
 
 ### TODO: Add more websites

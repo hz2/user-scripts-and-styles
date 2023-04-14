@@ -13,6 +13,9 @@
 
 Some user scripts and styles
 
+## [中文文档](./README-zh.md)
+
+
 ---
 
 ## Scripts
@@ -24,9 +27,7 @@ Some user scripts and styles
 > supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
 
 > *new supported* 
-- `instagram` ( photos and some videos )
-- `tiktok`, `douyin`, `kuaishou` ( videos )
-- `xiaohongshu` ( photos )
+- add AIGC website `midjourney` ( photos )
 
 
 
@@ -38,11 +39,13 @@ Some user scripts and styles
 | `bing` | ✅ | - | - |
 | `wallpaperhub.app` | ✅ | - | CORS |
 | `vmgirls` | ✅ | - | CORS |
-| `instagram` | ✅ | 🔘 (some) | *new* |
+| `instagram` | ✅ | 🔘 (partial) | *new* |
 | `tiktok` | - | ✅ | *new* |
 | `douyin` | - | ✅ | *new* |
 | `kuaishou` | - | ✅ | *new* |
-| `xiaohongshu` | ✅ | - | *new* |
+| `xiaohongshu` | ✅ | - | *invalid* 🚧 |
+| `midjourney` | ✅ | - | *new* 🤖 |
+| `nijijourney` | ✅ | - | *new* 🤖 |
 
 
 
