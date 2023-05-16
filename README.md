@@ -33,19 +33,20 @@ Some user scripts and styles
 
 | website | photo | video | remark |
 | --- | --- | --- | --- |
-| `medium` | ✅ | - | - |
+| `medium` | ✅ | - | *fixed* 🔨 |
 | `twitter` | ✅ | - | - |
 | `weibo` | ✅ | - | - |
 | `bing` | ✅ | - | - |
 | `wallpaperhub.app` | ✅ | - | CORS |
 | `vmgirls` | ✅ | - | CORS |
-| `instagram` | ✅ | 🔘 (partial) | *new* |
-| `tiktok` | - | ✅ | *new* |
-| `douyin` | - | ✅ | *new* |
-| `kuaishou` | - | ✅ | *new* |
-| `xiaohongshu` | ✅ | - | *invalid* 🚧 |
+| `instagram` | ✅ | 🔘 (partial) | - |
+| `tiktok` | - | ✅ | - |
+| `douyin` | - | ✅ | - |
+| `kuaishou` | - | ✅ | - |
+| `xiaohongshu` | ✅ | - | *invalid* ❌ 🚧 |
 | `midjourney` | ✅ | - | *new* 🤖 |
 | `nijijourney` | ✅ | - | *new* 🤖 |
+| `dribbble` | ✅ | ✅ | *new*  |
 
 
 
