@@ -9,13 +9,11 @@
 // @icon        data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNTA4IDUwOCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IDxjaXJjbGUgc3R5bGU9ImZpbGw6I0ZGRDA1QjsiIGN4PSIyNTQiIGN5PSIyNTQiIHI9IjI1NCIvPiA8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTM3Mi44LDE5NkgzNjhjLTIuNC00MC40LTM1LjYtNzIuNC03Ni40LTcyLjRjLTQsMC04LDAuNC0xMS42LDAuOGMtMTYtMjguNC00Ni00Ny42LTgwLjgtNDcuNiBjLTUxLjIsMC05Mi40LDQxLjYtOTIuNCw5Mi40YzAsMTAuOCwyLDIxLjIsNS4yLDMwLjhjLTI1LjIsMTAtNDIuOCwzNC00Mi44LDYyLjRjMCwzNi40LDI5LjYsNjYuNCw2Ni40LDY2LjRoMjM3LjIgYzM2LjQsMCw2Ni40LTI5LjYsNjYuNC02Ni40QzQzOC44LDIyNS42LDQwOS4yLDE5NiwzNzIuOCwxOTZ6Ii8+IDxwYXRoIHN0eWxlPSJmaWxsOiNGRjcwNTg7IiBkPSJNMzI1LjIsMzYyLjRsLTY2LjQsNjYuNGMtMi44LDIuOC03LjIsMi44LTEwLDBsLTY2LTY2LjRjLTQuNC00LjQtMS4yLTEyLDQuOC0xMmgxNC44IGM0LDAsNy4yLTMuMiw3LjItNy4ydi05NmMwLTQsMy4yLTcuMiw3LjItNy4yaDc0LjhjNCwwLDcuMiwzLjIsNy4yLDcuMnY5NmMwLDQsMy4yLDcuMiw3LjIsNy4yaDE0LjggQzMyNi40LDM1MC40LDMyOS42LDM1OCwzMjUuMiwzNjIuNHoiLz4gPC9zdmc+IA==
 // @author      huc < ht@live.se >
 // @supportURL  https://github.com/hz2/user-scripts-and-styles/issues/new
-// @require https://greasyfork.org/scripts/396752-hx-script-library/code/hx-script-library.js
-// @resource HxLib https://greasyfork.org/scripts/396752-hx-script-library/code/hx-script-library.js
 // @contributionURL https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=your.email.here@example.com&item_name=Greasy+Fork+donation
 // @contributionAmount 5
 // @include     *://medium.com/*
 // @include     *://twitter.com/*
-// @include     *://mobile.twitter.com/*
+// @include     *://*.twitter.com/*
 // @include     *://weibo.com/*
 // @include     *://*.weibo.com/*
 // @include     *://*.vmgirls.com/*
@@ -105,7 +103,7 @@ customElements.define('hxdownload-message',
       divElem.className = 'text-node'
       // style
       const style = document.createElement('style');
-      style.append( document.createTextNode(`
+      style.append(document.createTextNode(`
       .text-node{
         font-size: 14px;
         line-height: 21px;
@@ -336,7 +334,11 @@ const updateLink = (dom, link) => {
 
 const init = () => {
 
-  if (hostname === "twitter.com" || hostname === "mobile.twitter.com") {
+  if ([
+      'twitter.com',
+      'mobile.twitter.com',
+      'tweetdeck.twitter.com',
+    ].includes(hostname)) {
     //twitter
     window.addEventListener('mouseover', ({
       target
@@ -678,4 +680,4 @@ const init = () => {
 
 setTimeout(() => {
   init()
-}, 1500);
+}, 1200);
