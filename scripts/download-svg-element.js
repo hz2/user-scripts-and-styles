@@ -28,7 +28,7 @@
 
 const head = document.getElementsByTagName('head');
 head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
-.hx-download-original-images-tool{
+.hx-download-svg-el-tool{
     position: absolute;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNTA4IDUwOCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNTQiIGN5PSIyNTQiIHI9IjI1NCIgZmlsbD0iI2ZmYTZkYSIvPjxwYXRoIGQ9Im0zNzIuOCAxOTZoLTQuOGMtMi40LTQwLjQtMzUuNi03Mi40LTc2LjQtNzIuNC00IDAtOCAwLjQtMTEuNiAwLjgtMTYtMjguNC00Ni00Ny42LTgwLjgtNDcuNi01MS4yIDAtOTIuNCA0MS42LTkyLjQgOTIuNCAwIDEwLjggMiAyMS4yIDUuMiAzMC44LTI1LjIgMTAtNDIuOCAzNC00Mi44IDYyLjQgMCAzNi40IDI5LjYgNjYuNCA2Ni40IDY2LjRoMjM3LjJjMzYuNCAwIDY2LjQtMjkuNiA2Ni40LTY2LjQtMC40LTM2LjgtMzAtNjYuNC02Ni40LTY2LjR6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0ibTMyNS4yIDM2Mi40LTY2LjQgNjYuNGMtMi44IDIuOC03LjIgMi44LTEwIDBsLTY2LTY2LjRjLTQuNC00LjQtMS4yLTEyIDQuOC0xMmgxNC44YzQgMCA3LjItMy4yIDcuMi03LjJ2LTk2YzAtNCAzLjItNy4yIDcuMi03LjJoNzQuOGM0IDAgNy4yIDMuMiA3LjIgNy4ydjk2YzAgNCAzLjIgNy4yIDcuMiA3LjJoMTQuOGM1LjYgMCA4LjggNy42IDQuNCAxMnoiIGZpbGw9IiNkZTI2ZmYiLz48L3N2Zz4=);
     background-size: cover;
@@ -40,20 +40,20 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
     transform: scale(.75);
     transition: all cubic-bezier(0.18, 0.89, 0.32, 1.28) 250ms;
 }
-.hx-download-original-images-tool.white{
+.hx-download-svg-el-tool.white{
     background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9ImluaGVyaXQiIGltcGxpY2l0LWNvbnNlbnQtc291cmNlPSJ0cnVlIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEuMDEyMiAwIDAgMS4wMTIyIC0yOC42ODQgLTMuNDMzOSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjMiPgogIDxjaXJjbGUgY3g9IjQwLjE5NCIgY3k9IjE1LjI0OCIgcj0iOC45ODI0Ii8+CiAgPHBhdGggZD0ibTQ1IDE3LTQuNTMzIDMuNTQ3Yy0wLjE2NjU5IDAuMTMwMzUtMC4zODQ2MSAwLjE0OTU3LTAuNTM0MTggMGwtNC41NjY0LTMuNTQ3Yy0wLjIzNTA0LTAuMjM1MDQtMC4wNjQxLTAuNjQxMDIgMC4yNTY0MS0wLjY0MTAyaDIuNDM2MmMwLjIxMzY3IDAgMC4zODQ2MS0wLjE3MDk0IDAuMzg0NjEtMC4zODQ2MXYtNS43MzI5YzAtMC4yMTM2NyAwLjE3MDk0LTAuMzg0NjEgMC4zODQ2MS0wLjM4NDYxaDIuNzAzNmMwLjIxMzY3IDAgMC4zODQ2MSAwLjE3MDk0IDAuMzg0NjEgMC4zODQ2MXY1LjczMjljMCAwLjIxMzY3IDAuMTcwOTQgMC4zODQ2MSAwLjM4NDYxIDAuMzg0NjFoMi40NjM5YzAuMjk5MTQgMCAwLjQ5NjgyIDAuNDM2MTggMC4yMzUwNCAwLjY0MTAyeiIvPgogPC9nPgo8L3N2Zz4K);
     width: 24px;
     height: 24px;
 }
-.hx-download-original-images-tool:hover {
+.hx-download-svg-el-tool:hover {
     opacity:1;
     transform: scale(.9);
 }
-.hx-download-original-images-tool:active {
+.hx-download-svg-el-tool:active {
     opacity:.8;
     transform: scale(.7)  rotateZ(360deg);
 }
-.hx-download-original-images-tool-msg {
+.hx-download-svg-el-tool-msg {
   position: fixed;
   left: -250px;
   bottom: 50px;
@@ -72,17 +72,18 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
 
 console.warn('Welcome to %c \ud83d\ude48\ud83d\ude49\ud83d\ude4a\u0020\u0048\u007a\u00b2\u0020\u0053\u0063\u0072\u0069\u0070\u0074\u0020\u004c\u0069\u0062\u0072\u0061\u0072\u0079 %c v0.06 ', 'background-color:teal;color: white;border:1px solid teal;border-radius: 4px 0 0 4px;border-left-width:0;padding:1px;margin:2px 0;font-size:1.1em', 'background-color:#777;color: white;border:1px solid #777;border-radius: 0 4px 4px 0;border-right-width:0;padding:1px;margin:5px 0;');
 
-customElements.define('hxdownload-message',
-  class extends HTMLElement {
-    constructor() {
-      super();
+try {
+  customElements.define('hxdownload-message',
+    class extends HTMLElement {
+      constructor() {
+        super();
 
-      const divElem = document.createElement('div');
-      // divElem.textContent = this.getAttribute('text');
-      divElem.className = 'text-node'
-      // style
-      const style = document.createElement('style');
-      style.append(document.createTextNode(`
+        const divElem = document.createElement('div');
+        // divElem.textContent = this.getAttribute('text');
+        divElem.className = 'text-node'
+        // style
+        const style = document.createElement('style');
+        style.append(document.createTextNode(`
       .text-node{
         font-size: 14px;
         line-height: 21px;
@@ -92,14 +93,17 @@ customElements.define('hxdownload-message',
         word-break: break-word;
       }      
       `))
-      const shadowRoot = this.attachShadow({
-        mode: 'open'
-      });
-      shadowRoot.appendChild(style);
-      shadowRoot.appendChild(divElem);
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        });
+        shadowRoot.appendChild(style);
+        shadowRoot.appendChild(divElem);
+      }
     }
-  }
-);
+  );
+} catch (error) {
+
+}
 
 
 globalThis.__hx_Msg_list = new Set();
@@ -109,7 +113,7 @@ class __hx_MsgIns {
     this.text = text;
     this.el = document.createElement('hxdownload-message')
     document.body.insertAdjacentElement('beforeend', this.el)
-    this.el.className = 'hx-download-original-images-tool-msg';
+    this.el.className = 'hx-download-svg-el-tool-msg';
     this.textEl = this.el.shadowRoot.querySelector('.text-node')
     this.textEl.innerText = text;
     __hx_Msg_list.add(this);
@@ -239,8 +243,8 @@ const lastItem = (arr, index = 0) => arr.length ? arr[arr.length - 1 - index] : 
 
 const createDomAll = (item, fn) => {
   let domDL = document.createElement('a');
-  domDL.className = 'hx-download-original-images-tool'
-  domDL.title = '下载原始图片'
+  domDL.className = 'hx-download-svg-el-tool'
+  domDL.title = '下载 SVG 元素'
 
   // item.addEventListener('load', _ => {
   let link = fn(item.src)
@@ -270,7 +274,7 @@ const createDom = (cfg) => {
     let domDL = dom || document.createElement('a');
     Object.assign(domDL, {
       title: '下载原始图片',
-      className: 'hx-download-original-images-tool ' + className,
+      className: 'hx-download-svg-el-tool ' + className,
       style: style,
       href: link,
     })
@@ -297,7 +301,7 @@ const createDom = (cfg) => {
   // if (['afterEnd', 'beforeBegin'].includes(postion)) {
   //   parent2 = target.parentElement.parentElement
   // }
-  const exist = parent2 && parent2.querySelector('.hx-download-original-images-tool')
+  const exist = parent2 && parent2.querySelector('.hx-download-svg-el-tool')
   if (exist) {
     genDomDL(exist)
   } else {
