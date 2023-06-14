@@ -93,17 +93,18 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
 
 console.warn('Welcome to %c \ud83d\ude48\ud83d\ude49\ud83d\ude4a\u0020\u0048\u007a\u00b2\u0020\u0053\u0063\u0072\u0069\u0070\u0074\u0020\u004c\u0069\u0062\u0072\u0061\u0072\u0079 %c v0.06 ', 'background-color:teal;color: white;border:1px solid teal;border-radius: 4px 0 0 4px;border-left-width:0;padding:1px;margin:2px 0;font-size:1.1em', 'background-color:#777;color: white;border:1px solid #777;border-radius: 0 4px 4px 0;border-right-width:0;padding:1px;margin:5px 0;');
 
-customElements.define('hxdownload-message',
-  class extends HTMLElement {
-    constructor() {
-      super();
+try {
+  customElements.define('hxdownload-message',
+    class extends HTMLElement {
+      constructor() {
+        super();
 
-      const divElem = document.createElement('div');
-      // divElem.textContent = this.getAttribute('text');
-      divElem.className = 'text-node'
-      // style
-      const style = document.createElement('style');
-      style.append(document.createTextNode(`
+        const divElem = document.createElement('div');
+        // divElem.textContent = this.getAttribute('text');
+        divElem.className = 'text-node'
+        // style
+        const style = document.createElement('style');
+        style.append(document.createTextNode(`
       .text-node{
         font-size: 14px;
         line-height: 21px;
@@ -113,14 +114,18 @@ customElements.define('hxdownload-message',
         word-break: break-word;
       }      
       `))
-      const shadowRoot = this.attachShadow({
-        mode: 'open'
-      });
-      shadowRoot.appendChild(style);
-      shadowRoot.appendChild(divElem);
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        });
+        shadowRoot.appendChild(style);
+        shadowRoot.appendChild(divElem);
+      }
     }
-  }
-);
+  );
+
+} catch (error) {
+
+}
 
 
 globalThis.__hx_Msg_list = new Set();

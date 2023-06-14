@@ -373,10 +373,11 @@ const init = () => {
   }
 
   window.addEventListener('mouseover', throttle(
-      ({
-        target
-      }) => {
-        if (!target) {
+      (event) => {
+        const {
+          target
+        } = event
+        if (!event.ctrlKey || !target) {
           return
         }
         if (!['G', 'PATH', 'USE', 'SVG', 'IMG'].includes(target.tagName.toUpperCase())) {
