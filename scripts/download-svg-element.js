@@ -380,7 +380,7 @@ const init = () => {
         if (!event.ctrlKey || !target) {
           return
         }
-        if (!['G', 'PATH', 'USE', 'SVG', 'IMG'].includes(target.tagName.toUpperCase())) {
+        if (!['G', 'PATH', 'RECT', 'USE', 'SVG', 'IMG'].includes(target.tagName.toUpperCase())) {
           return
         }
 
