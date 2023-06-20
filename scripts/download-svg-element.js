@@ -393,7 +393,7 @@ const init = () => {
         }
 
         // remote svg
-        if (target.tagName.toUpperCase() === 'IMG' && target.src.endsWith('svg')) {
+        if (target.tagName.toUpperCase() === 'IMG' && target.src.includes('.svg')) {
           Object.assign(cfg, {
             link: target.src,
             style: 'left: -10px;top: -10px;',
