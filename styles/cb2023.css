@@ -1,5 +1,5 @@
 @namespace url(http://www.w3.org/1999/xhtml);
-
+/* https://userstyles.org/styles/107611.css */
 @-moz-document domain("cnbeta.com.tw"), domain("www.cnbeta.com.tw") {
 
     /*[[pz]]*/
@@ -84,7 +84,8 @@
     .section-content-bottom .main-content__first-row::after,
     .third-articles,
     .second-articles,
-    .hd-sup.box-sup {
+    .hd-sup.box-sup,
+    .home-page .feed-item-section .secondary-tile .title>a::after {
         display: none !important;
     }
 
@@ -117,6 +118,12 @@
         background: #f8f8f8;
         box-shadow: 1px 1px 2px #ddd;
     }
+
+    .home-page .feed-item-section .secondary-tile .tile-picture:hover {
+        transform: rotate(-5deg);
+        transition: all 250ms ease-in-out;
+    }
+
 
     .home-page .feed-item-section .secondary-tile .tile-content {
         padding: 10px
