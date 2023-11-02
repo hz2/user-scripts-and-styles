@@ -4,18 +4,16 @@
 // @description  A tool to help you download full size images from websites
 // @description:zh-CN  一个帮你从网站下载原始尺寸图片的工具
 // @namespace    https://huching.net/
-// @version     0.1.1
+// @version     0.1.2
 // @license     GPL-3.0
 // @icon        data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNTA4IDUwOCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IDxjaXJjbGUgc3R5bGU9ImZpbGw6I0ZGRDA1QjsiIGN4PSIyNTQiIGN5PSIyNTQiIHI9IjI1NCIvPiA8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTM3Mi44LDE5NkgzNjhjLTIuNC00MC40LTM1LjYtNzIuNC03Ni40LTcyLjRjLTQsMC04LDAuNC0xMS42LDAuOGMtMTYtMjguNC00Ni00Ny42LTgwLjgtNDcuNiBjLTUxLjIsMC05Mi40LDQxLjYtOTIuNCw5Mi40YzAsMTAuOCwyLDIxLjIsNS4yLDMwLjhjLTI1LjIsMTAtNDIuOCwzNC00Mi44LDYyLjRjMCwzNi40LDI5LjYsNjYuNCw2Ni40LDY2LjRoMjM3LjIgYzM2LjQsMCw2Ni40LTI5LjYsNjYuNC02Ni40QzQzOC44LDIyNS42LDQwOS4yLDE5NiwzNzIuOCwxOTZ6Ii8+IDxwYXRoIHN0eWxlPSJmaWxsOiNGRjcwNTg7IiBkPSJNMzI1LjIsMzYyLjRsLTY2LjQsNjYuNGMtMi44LDIuOC03LjIsMi44LTEwLDBsLTY2LTY2LjRjLTQuNC00LjQtMS4yLTEyLDQuOC0xMmgxNC44IGM0LDAsNy4yLTMuMiw3LjItNy4ydi05NmMwLTQsMy4yLTcuMiw3LjItNy4yaDc0LjhjNCwwLDcuMiwzLjIsNy4yLDcuMnY5NmMwLDQsMy4yLDcuMiw3LjIsNy4yaDE0LjggQzMyNi40LDM1MC40LDMyOS42LDM1OCwzMjUuMiwzNjIuNHoiLz4gPC9zdmc+IA==
 // @author      huc < ht@live.se >
 // @supportURL  https://github.com/hz2/user-scripts-and-styles/issues/new
-// @require https://greasyfork.org/scripts/396752-hx-script-library/code/hx-script-library.js
-// @resource HxLib https://greasyfork.org/scripts/396752-hx-script-library/code/hx-script-library.js
 // @contributionURL https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=your.email.here@example.com&item_name=Greasy+Fork+donation
 // @contributionAmount 5
 // @include     *://medium.com/*
 // @include     *://twitter.com/*
-// @include     *://mobile.twitter.com/*
+// @include     *://*.twitter.com/*
 // @include     *://weibo.com/*
 // @include     *://*.weibo.com/*
 // @include     *://*.vmgirls.com/*
@@ -31,6 +29,10 @@
 // @include     *://*.douyin.com/*
 // @include     *://*.kuaishou.com/*
 // @include     *://*.xiaohongshu.com/*
+// @match     *://nijijourney.com/*
+// @match     *://*.midjourney.com/*
+// @match     *://dribbble.com/*
+// @match     *://*.dribbble.com/*
 
 // @noframes
 // @grant          unsafeWindow
@@ -72,10 +74,97 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
     opacity:.8;
     transform: scale(.7)  rotateZ(360deg);
 }
+.hx-download-original-images-tool-msg {
+  position: fixed;
+  left: -250px;
+  bottom: 50px;
+  width: 250px;  
+  background: linear-gradient(to bottom right, #00000037, #0004 , #00000057 );
+  box-shadow: 1px 0 20px 1px #64646433;
+  padding: 2px 20px;
+  z-index: 65536;
+  border-radius: 100px;
+  color: #fff;
+  transform: translateX(280px) translateY(0);
+  transition: all cubic-bezier(0.18, 0.89, 0.32, 1.28) 250ms;
+}
 </style>`);
 
 
 console.warn('Welcome to %c \ud83d\ude48\ud83d\ude49\ud83d\ude4a\u0020\u0048\u007a\u00b2\u0020\u0053\u0063\u0072\u0069\u0070\u0074\u0020\u004c\u0069\u0062\u0072\u0061\u0072\u0079 %c v0.06 ', 'background-color:teal;color: white;border:1px solid teal;border-radius: 4px 0 0 4px;border-left-width:0;padding:1px;margin:2px 0;font-size:1.1em', 'background-color:#777;color: white;border:1px solid #777;border-radius: 0 4px 4px 0;border-right-width:0;padding:1px;margin:5px 0;');
+
+try {
+  customElements.define('hxdownload-message',
+    class extends HTMLElement {
+      constructor() {
+        super();
+
+        const divElem = document.createElement('div');
+        // divElem.textContent = this.getAttribute('text');
+        divElem.className = 'text-node'
+        // style
+        const style = document.createElement('style');
+        style.append(document.createTextNode(`
+      .text-node{
+        font-size: 14px;
+        line-height: 21px;
+        font-family: sans-serif;
+        width: 100%;
+        overflow: hidden;
+        word-break: break-word;
+      }      
+      `))
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        });
+        shadowRoot.appendChild(style);
+        shadowRoot.appendChild(divElem);
+      }
+    }
+  );
+
+} catch (error) {
+
+}
+
+
+globalThis.__hx_Msg_list = new Set();
+
+class __hx_MsgIns {
+  constructor(text) {
+    this.text = text;
+    this.el = document.createElement('hxdownload-message')
+    document.body.insertAdjacentElement('beforeend', this.el)
+    this.el.className = 'hx-download-original-images-tool-msg';
+    this.textEl = this.el.shadowRoot.querySelector('.text-node')
+    this.textEl.innerText = text;
+    __hx_Msg_list.add(this);
+    this.el.style.transform = `translateX(280px) translateY(-${ (__hx_Msg_list.size -1 )* 50}px)`
+  }
+  /**
+   * @param {any} text
+   */
+  update(text) {
+    this.textEl.innerText = text
+  }
+  close() {
+    this.textEl.innerText = ''
+    this.el.parentElement.removeChild(this.el)
+    __hx_Msg_list.delete(this);
+  }
+}
+
+function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
 
 const openDown = (url, e, name) => {
   e && e.preventDefault();
@@ -104,11 +193,63 @@ const openDown = (url, e, name) => {
 
   }
 
-
   fetch(url, {
       mode: "cors"
     })
-    .then(resp => resp.blob())
+    .then(async resp => {
+      // instead of response.json() and other methods
+      const reader = resp.body.getReader();
+      const contentLength = +resp.headers.get('Content-Length');
+      const ct = (resp.headers && resp.headers.get('Content-Type')) || '';
+      console.log('ct', ct);
+      // Step 3: read the data
+      let receivedLength = 0; // received that many bytes at the moment
+      let chunks = []; // array of received binary chunks (comprises the body)
+
+
+      const __hx_Msg = new __hx_MsgIns('Loading');
+
+
+      // infinite loop while the body is downloading
+      while (true) {
+        // done is true for the last chunk
+        // value is Uint8Array of the chunk bytes
+        const {
+          done,
+          value
+        } = await reader.read();
+
+        if (done) {
+          break;
+        }
+        chunks.push(value);
+        receivedLength += value.length;
+        const text =
+          __hx_Msg.update(`Received ${ formatBytes( receivedLength )} / ${ formatBytes( contentLength ) }`)
+      }
+      __hx_Msg.close()
+      return new Blob(chunks, {
+        type: ct
+      });
+
+
+      // // Step 4: concatenate chunks into single Uint8Array
+      // let chunksAll = new Uint8Array(receivedLength); // (4.1)
+      // let position = 0;
+      // for(let chunk of chunks) {
+      //   chunksAll.set(chunk, position); // (4.2)
+      //   position += chunk.length;
+      // }
+
+      // // Step 5: decode into a string
+      // let result = new TextDecoder("utf-8").decode(chunksAll);
+
+      // // We're done!
+      // let commits = JSON.parse(result);
+      // alert(commits[0].author.login);
+
+      // return resp.blob()
+    })
     .then(r => {
       const blobUrl = URL.createObjectURL(r)
       downBlobUrl(blobUrl)
@@ -120,18 +261,22 @@ const openDown = (url, e, name) => {
 
 const hostname = window.location.hostname
 
-const lastItem = arr => arr.length ? arr[arr.length - 1] : ''
+const lastItem = (arr, index = 0) => arr.length ? arr[arr.length - 1 - index] : ''
 
 const createDomAll = (item, fn) => {
   let domDL = document.createElement('a');
   domDL.className = 'hx-download-original-images-tool'
   domDL.title = '下载原始图片'
 
-  item.addEventListener('load', _ => {
-    let link = fn(item.src)
-    domDL.href = link
-    domDL.addEventListener('click', e => openDown(link, e))
+  // item.addEventListener('load', _ => {
+  let link = fn(item.src)
+  domDL.href = link || item.src
+  domDL.addEventListener('click', e => {
+    e.preventDefault()
+    e.stopPropagation()
+    openDown(link, e, lastItem(link.split('/')))
   })
+  // })
   item.insertAdjacentElement('afterEnd', domDL)
 }
 
@@ -143,7 +288,8 @@ const createDom = (cfg) => {
     className = '',
     style = '',
     target,
-    postion = 'afterEnd'
+    postion = 'afterEnd',
+    linkArr
   } = cfg
 
   const genDomDL = (dom) => {
@@ -158,7 +304,14 @@ const createDom = (cfg) => {
       e && e.preventDefault();
       e && e.stopPropagation()
       const newName = name || lastItem(link.split('/'))
-      openDown(link, e, newName)
+      if (linkArr) {
+        linkArr.forEach(({
+          link,
+          name
+        }) => openDown(link, e, name))
+      } else {
+        openDown(link, e, newName);
+      }
     }
     return domDL
   }
@@ -186,7 +339,11 @@ const updateLink = (dom, link) => {
 
 const init = () => {
 
-  if (hostname === "twitter.com" || hostname === "mobile.twitter.com") {
+  if ([
+      'twitter.com',
+      'mobile.twitter.com',
+      'tweetdeck.twitter.com',
+    ].includes(hostname)) {
     //twitter
     window.addEventListener('mouseover', ({
       target
@@ -196,7 +353,7 @@ const init = () => {
       const next = parent && parent.nextElementSibling
       if (target.tagName == 'IMG' &&
         !(next && next.className.includes('hx-download-original-images-tool')) &&
-        !/profile_images|video_thumb/g.test(src)) {
+        !/profile_images|emoji|video_thumb/g.test(src)) {
         const link = src.replace(/\&name=\w+/g, '&name=orig')
         const name = lastItem(link.split('/')).replace(/\?format=(\w+)\&name=orig/g, (_, b) => `.${b}`)
         const style = 'margin-left: 10px;margin-top: 10px;'
@@ -265,7 +422,16 @@ const init = () => {
     document.querySelector('.main-submenu').insertAdjacentElement('afterBegin', domDL)
   } else if (hostname === "medium.com") {
     // medium
-    document.querySelector('article').querySelectorAll('img').forEach(x => (x.width > 80) && createDomAll(x, src => src.replace(/max\/\d+\//g, 'max/30000/')))
+    document.querySelector('article').querySelectorAll('img').forEach(x => {
+      if (x.width < 80) {
+        return
+      } else if (x.src.includes('max')) {
+        createDomAll(x, src => src.replace(/max\/\d+\//g, 'max/30000/'))
+      } else if (x.src.includes('resize')) {
+        // https://miro.medium.com/v2/resize:fit:700/1*OG99lac_uxo6nUOcJtUrNw.jpeg
+        createDomAll(x, src => src.replace(/resize:fit:\d+\//g, ''))
+      }
+    })
   } else if (hostname === "wallpaperhub.app") {
     // wallpaperhub
     const odomList = [...document.querySelectorAll('.downloadButton')]
@@ -451,10 +617,72 @@ const init = () => {
 
 
     })
+  } else if (hostname === "dribbble.com") {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const container = target && target.parentElement && target.parentElement.parentElement
+      if (container && container.className && (container.className.includes('block-media') || container.className.includes('video-container'))) {
+        const inner = container.querySelector('img') || container.querySelector('video');
+        let src = '';
+        if (inner.tagName === 'IMG') {
+          src = (inner && (inner.src || inner.srcset)).split('?')[0]
+        } else if (inner.tagName === 'VIDEO') {
+          src = inner && inner.src
+        }
+        const link = src
+        const style = 'left: 10px;top: 10px;'
+        const cfg = {
+          link,
+          style,
+          parent: container,
+          postion: 'beforeEnd',
+          name: lastItem(src.split('?')[0].split('/').filter(x => x)),
+        }
+        createDom(cfg)
+      }
+
+
+    })
+
+  } else if (hostname === "nijijourney.com" || hostname === 'www.midjourney.com') {
+    window.addEventListener('mouseover', ({
+      target
+    }) => {
+      const container = target && target.parentElement && target.parentElement.parentElement
+      if (container) {
+        const inner = container.querySelector('link')
+        const src = inner && inner.href.replace('_32_N.webp', '.webp')
+        const link = src || ''
+        const style = 'left: 10px;top: 10px;'
+        const baseName = lastItem(link.split(/[\/\?]/), 1);
+        let linkArr = []
+        //linkArr.forEach(({ link, name}
+        const linkCount = lastItem(link.split(/[\.\_\/]/), 1)
+        const cfg = {
+          link,
+          style,
+          parent: container,
+          postion: 'beforeEnd',
+          name: baseName,
+        }
+        if (Number(linkCount) > 0) {
+          cfg.linkArr = Array.from({
+            length: Number(linkCount) + 1
+          }).map((x, i) => ({
+            link: link.replace(/(\d).webp$/, i + '.webp'),
+            name: baseName + '_' + i
+          }))
+        }
+        createDom(cfg)
+      }
+
+
+    })
   }
 
 }
 
 setTimeout(() => {
   init()
-}, 1500);
+}, 1200);

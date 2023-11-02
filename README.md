@@ -13,6 +13,9 @@
 
 Some user scripts and styles
 
+## [中文文档](./README-zh.md)
+
+
 ---
 
 ## Scripts
@@ -24,25 +27,26 @@ Some user scripts and styles
 > supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
 
 > *new supported* 
-- `instagram` ( photos and some videos )
-- `tiktok`, `douyin`, `kuaishou` ( videos )
-- `xiaohongshu` ( photos )
+- add AIGC website `midjourney` ( photos )
 
 
 
 | website | photo | video | remark |
 | --- | --- | --- | --- |
-| `medium` | ✅ | - | - |
+| `medium` | ✅ | - | *fixed* 🔨 |
 | `twitter` | ✅ | - | - |
 | `weibo` | ✅ | - | - |
 | `bing` | ✅ | - | - |
 | `wallpaperhub.app` | ✅ | - | CORS |
 | `vmgirls` | ✅ | - | CORS |
-| `instagram` | ✅ | 🔘 (some) | *new* |
-| `tiktok` | - | ✅ | *new* |
-| `douyin` | - | ✅ | *new* |
-| `kuaishou` | - | ✅ | *new* |
-| `xiaohongshu` | ✅ | - | *new* |
+| `instagram` | ✅ | 🔘 (partial) | - |
+| `tiktok` | - | ✅ | - |
+| `douyin` | - | ✅ | - |
+| `kuaishou` | - | ✅ | - |
+| `xiaohongshu` | ✅ | - | *invalid* ❌ 🚧 |
+| `midjourney` | ✅ | - | *new* 🤖 |
+| `nijijourney` | ✅ | - | *new* 🤖 |
+| `dribbble` | ✅ | ✅ | *new*  |
 
 
 
