@@ -1,0 +1,243 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+/* https://userstyles.org/styles/107611.css */
+@-moz-document domain("cnbeta.com.tw"), domain("www.cnbeta.com.tw") {
+
+    /*[[pz]]*/
+    /*[[sfw]]*/
+    /*[[nm]]*/
+
+    /* 广告 */
+    #rank_box,
+    #relation_box,
+    h3+.cnbeta-update-list,
+    #BAIDU_DUP_fp_wrapper,
+    .cnbeta-article-wrapper>.w1200:first-child,
+    ins,
+    iframe,
+    .article-content+.tac,
+    #main-commentbox+.cbv,
+    .pageFooter .media,
+    .pageFooter .sponsors,
+    .pageFooter .about,
+    #COMMENTS~.cnbeta-article-latest,
+    .article-content>.article-relation,
+    .article-content>.article-topic,
+    .article-content~.article-global,
+    .global-navi>.nav-item+.nav-item,
+    .cnbeta-home-hot-comments.none .cnbeta-side-box,
+    .topContent>.topContentInner,
+    #left1.cbv,
+    .item .meta-data+.cnbeta-update-list-article,
+    .meta-data>.tks,
+    .headline-thumb~ul,
+    .cnbeta-article-vote-tags+.cnbeta-article-latest,
+    .cbv,
+    .cnbeta-headlines-title,
+    .main-wrap>.topContent,
+    .cbv~.cnbeta-side-box,
+    .item.cooperation,
+    .cnbeta-side-sponsor,
+    .items-area>[id^="_"].item,
+    #upcoming_box,
+    .article-share-code,
+    .cnbeta-section-title {
+        display: none !important;
+    }
+
+    [style*="important"],
+    [style*="important"]>*,
+    [style*="z-index"],
+    [style*="important"] {
+        height: 0px !important;
+        margin: 0px !important;
+        font-size: 0px;
+        padding: 0 !important;
+        display: none !important;
+        width: 0 !important;
+        opacity: 0 !important;
+        line-height: 0 !important;
+
+    }
+
+    /** 2023 */
+
+    [style*="#c00000"] {
+        color: #333 !important;
+    }
+
+    .cb-sponsor,
+    .main__left,
+    [href*='click.aliyun'],
+    .cnbeta-home-side,
+    .footer-wrapper__mainmenu .about,
+    .footer-wrapper__mainmenu .sponsors,
+    .footer-wrapper__mainmenu .media,
+
+    .side-section,
+    .hot-realtime-wrapper,
+    .opinion-section,
+    .dogg-tile,
+    .main-content-wrapper.section-content-middle,
+    .bottom-side-section,
+    .right-column-section,
+    .section-content-top::after,
+    .section-content-bottom .main-content__first-row::after,
+    .third-articles,
+    .second-articles,
+    .hd-sup.box-sup,
+    .home-page .feed-item-section .secondary-tile .title>a::after {
+        display: none !important;
+    }
+
+    :root {
+
+        --main-width: 1000px;
+    }
+
+    .cnbeta-article {
+        width: 100%;
+        max-width: var(--main-width);
+        margin: auto;
+        flex-basis: 100%;
+    }
+
+    .main-content-wrapper .bottom-main-content {
+        margin: auto;
+    }
+
+    picture {
+        border-radius: 2px;
+    }
+
+    .home-page .feed-item-section .secondary-tile {
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .home-page .feed-item-section .secondary-tile:hover {
+        background: #f8f8f8;
+        box-shadow: 1px 1px 2px #ddd;
+    }
+
+    .home-page .feed-item-section .secondary-tile .tile-picture:hover {
+        transform: rotate(-5deg);
+        transition: all 250ms ease-in-out;
+    }
+
+
+    .home-page .feed-item-section .secondary-tile .tile-content {
+        padding: 10px
+    }
+
+    .home-page .feed-item-section .secondary-tile .title a {
+
+        color: #696969;
+    }
+
+    @media (min-width: 1024px) {
+        .bottom-main-content {
+            border-left: 0;
+        }
+    }
+
+
+    @media (min-width: 980px) {
+        .m-c {
+            display: block;
+        }
+    }
+
+    .m-c {
+        display: block;
+    }
+
+
+
+    .main-update-section {
+        max-width: var(--main-width);
+        margin: auto;
+    }
+
+
+
+    .article-content p {
+        text-align: justify;
+        word-break: break-word;
+    }
+
+    .cnbeta-article .article-content img {
+        max-width: 600px;
+        margin: 20px auto;
+
+    }
+
+    .page-footer .footer-wrapper {
+        max-width: var(--main-width);
+        padding: 10px 0;
+    }
+
+    .footer-wrapper__logo {
+        opacity: .3;
+    }
+
+    .page-footer .rule,
+    .page-footer .copy {
+        font-weight: 400;
+        color: #fff3;
+    }
+
+
+    .top-search-box {
+        flex-grow: 0;
+        flex-shrink: 0 !important;
+        flex-basis: 220px;
+    }
+
+    .header-menu-top {
+        max-width: var(--main-width);
+        width: var(--main-width);
+        margin: auto;
+        justify-content: space-between;
+    }
+
+    .global-navi {
+        display: none !important;
+
+    }
+
+    .cnbeta-article header.title .meta .conmment-num {
+        color: #777;
+    }
+
+    .cnbeta-article header.title .meta .conmment-num i {
+        filter: grayscale(100%);
+        opacity: .5;
+    }
+
+    .meta .source a {
+        color: #777;
+    }
+
+    .hd-container {
+        padding-top: 10px;
+    }
+
+    @media (min-width: 1024px) {
+        .main-article-section {
+            width: var(--main-width);
+            padding: 12px;
+            float: none;
+            margin: auto;
+        }
+
+        .main-content {
+            margin: auto;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .home-page .feed-item-section .secondary-tile {
+            grid-template-columns: 100px 1fr;
+        }
+    }
+}
