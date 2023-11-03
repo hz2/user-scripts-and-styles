@@ -44,3 +44,9 @@
 
 
 ### TODO: Add more websites
+
+
+
+## Styles
+
+[安装样式](https://ext.firefoxcn.net/xstyle/install/open.html?name=西贝2024&code=https://raw.githubusercontent.com/hz2/user-scripts-and-styles/master/styles/cb2023.css)
