@@ -1,11 +1,12 @@
 @namespace url(http://www.w3.org/1999/xhtml);
 /* https://userstyles.org/styles/107611.css */
-@-moz-document domain("cnbeta.com.tw"), domain("www.cnbeta.com.tw") {
+/* https://raw.githubusercontent.com/hz2/user-scripts-and-styles/master/styles/cb2023.css */
+@-moz-document domain("cnbeta.com.tw"),
+domain("www.cnbeta.com.tw") {
 
     /*[[pz]]*/
     /*[[sfw]]*/
     /*[[nm]]*/
-
     /* 广告 */
     #rank_box,
     #relation_box,
@@ -56,23 +57,20 @@
         width: 0 !important;
         opacity: 0 !important;
         line-height: 0 !important;
-
     }
 
     /** 2023 */
-
     [style*="#c00000"] {
-        color: #333 !important;
+        color: #555 !important;
     }
 
     .cb-sponsor,
     .main__left,
-    [href*='click.aliyun'],
+    [href*="click.aliyun"],
     .cnbeta-home-side,
     .footer-wrapper__mainmenu .about,
     .footer-wrapper__mainmenu .sponsors,
     .footer-wrapper__mainmenu .media,
-
     .side-section,
     .hot-realtime-wrapper,
     .opinion-section,
@@ -83,14 +81,77 @@
     .section-content-top::after,
     .section-content-bottom .main-content__first-row::after,
     .third-articles,
-    .second-articles,
+    .second-articles .article-related,
+    .hd-item-wrapper,
     .hd-sup.box-sup,
     .home-page .feed-item-section .secondary-tile .title>a::after {
         display: none !important;
     }
 
-    :root {
+    a {
+        color: #737373;
+    }
 
+    .main-article-section .second-articles,
+    .main-article-section .third-articles {
+        width: 520px;
+        position: absolute;
+        top: 100px;
+        background: #f4f4f4;
+        box-sizing: border-box;
+        padding: 8px;
+    }
+
+    .cnbeta-swiper-headlines .vipchosen-wrapper {
+        padding: 0;
+    }
+
+    .vipchosen-wrapper .items-wrap .item {
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    .vipchosen-wrapper .items-wrap .item,
+    .hotpush-articles .items-wrap .item {
+        width: calc((100% - 8px) / 3);
+    }
+
+    .second-articles .item .swiper-img {
+        height: 83px;
+        min-height: 70px;
+    }
+
+    .second-articles .headline-content .swiper-img img {
+        min-width: 100%;
+        min-height: 100%;
+    }
+
+    .second-articles .swiper-slide {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .headline-content .swiper-title {
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .headline-content .swiper-title h2 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        height: unset;
+    }
+
+    .main-article-section .second-articles,
+    .main-article-section .third-articles {
+        border-bottom: 0;
+    }
+
+    :root {
         --main-width: 1000px;
     }
 
@@ -124,13 +185,11 @@
         transition: all 250ms ease-in-out;
     }
 
-
     .home-page .feed-item-section .secondary-tile .tile-content {
-        padding: 10px
+        padding: 10px;
     }
 
     .home-page .feed-item-section .secondary-tile .title a {
-
         color: #696969;
     }
 
@@ -139,7 +198,6 @@
             border-left: 0;
         }
     }
-
 
     @media (min-width: 980px) {
         .m-c {
@@ -151,14 +209,10 @@
         display: block;
     }
 
-
-
     .main-update-section {
         max-width: var(--main-width);
         margin: auto;
     }
-
-
 
     .article-content p {
         text-align: justify;
@@ -168,7 +222,6 @@
     .cnbeta-article .article-content img {
         max-width: 600px;
         margin: 20px auto;
-
     }
 
     .page-footer .footer-wrapper {
@@ -177,7 +230,7 @@
     }
 
     .footer-wrapper__logo {
-        opacity: .3;
+        opacity: 0.3;
     }
 
     .page-footer .rule,
@@ -185,7 +238,6 @@
         font-weight: 400;
         color: #fff3;
     }
-
 
     .top-search-box {
         flex-grow: 0;
@@ -202,7 +254,6 @@
 
     .global-navi {
         display: none !important;
-
     }
 
     .cnbeta-article header.title .meta .conmment-num {
@@ -211,7 +262,7 @@
 
     .cnbeta-article header.title .meta .conmment-num i {
         filter: grayscale(100%);
-        opacity: .5;
+        opacity: 0.5;
     }
 
     .meta .source a {
