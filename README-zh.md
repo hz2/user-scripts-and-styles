@@ -16,9 +16,9 @@
 
 ### 1、Download Original Picture / 下载原始图片工具
 
-> 支持网站:  `medium` , `twitter`, `weibo`, `bing` , `edge home`
+> 支持网站:  `medium` , `x` （原 `twitter`）, `weibo`, `bing` , `edge home`
 
-> 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` , `vmgirls` 
+> 支持网站 ( 需要设置跨域 CORS ): `wallpaperhub.app` 
 
 > *最新支持*  
 - 增加 AIGC网站 `midjourney` ( 图片 )
@@ -28,11 +28,10 @@
 | 网站 | 图片 | 视频 | 备注 |
 | --- | --- | --- | --- |
 | `medium` | ✅ | - | *已修复* 🔨 |
-| `twitter` | ✅ | - | - |
+| `x` | ✅ | - | - |
 | `weibo` | ✅ | - | - |
 | `bing` | ✅ | - | - |
 | `wallpaperhub.app` | ✅ | - | 跨域 |
-| `vmgirls` | ✅ | - | 跨域 |
 | `instagram` | ✅ | 🔘 (部分) | - |
 | `tiktok` | - | ✅ | - |
 | `douyin` | - | ✅ | - |

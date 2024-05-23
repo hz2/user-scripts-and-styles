@@ -22,7 +22,7 @@ Some user scripts and styles
 
 ### (1) Download Original Picture
 
-> supported websites: `medium` , `twitter`, `weibo`, `bing` , `edge home`
+> supported websites: `medium` , `x` ( `twitter`), `weibo`, `bing` , `edge home`
 
 > supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
 
@@ -34,11 +34,10 @@ Some user scripts and styles
 | website | photo | video | remark |
 | --- | --- | --- | --- |
 | `medium` | ✅ | - | *fixed* 🔨 |
-| `twitter` | ✅ | - | - |
+| `x` | ✅ | - | - |
 | `weibo` | ✅ | - | - |
 | `bing` | ✅ | - | - |
 | `wallpaperhub.app` | ✅ | - | CORS |
-| `vmgirls` | ✅ | - | CORS |
 | `instagram` | ✅ | 🔘 (partial) | - |
 | `tiktok` | - | ✅ | - |
 | `douyin` | - | ✅ | - |
