@@ -57,7 +57,7 @@ head[0].insertAdjacentHTML('beforeend', `<style type="text/css">
   position: fixed;
   left: -250px;
   bottom: 50px;
-  width: 250px;  
+  width: 250px;
   background: linear-gradient(to bottom right, #00000037, #0004 , #00000057 );
   box-shadow: 1px 0 20px 1px #64646433;
   padding: 2px 20px;
@@ -75,7 +75,7 @@ console.warn('Welcome to %c \ud83d\ude48\ud83d\ude49\ud83d\ude4a\u0020\u0048\u00
 try {
   customElements.define('hxdownload-message',
     class extends HTMLElement {
-      constructor() {
+      constructor () {
         super();
 
         const divElem = document.createElement('div');
@@ -91,7 +91,7 @@ try {
         width: 100%;
         overflow: hidden;
         word-break: break-word;
-      }      
+      }
       `))
         const shadowRoot = this.attachShadow({
           mode: 'open'
@@ -109,7 +109,7 @@ try {
 globalThis.__hx_Msg_list = new Set();
 
 class __hx_MsgIns {
-  constructor(text) {
+  constructor (text) {
     this.text = text;
     this.el = document.createElement('hxdownload-message')
     document.body.insertAdjacentElement('beforeend', this.el)
@@ -117,7 +117,7 @@ class __hx_MsgIns {
     this.textEl = this.el.shadowRoot.querySelector('.text-node')
     this.textEl.innerText = text;
     __hx_Msg_list.add(this);
-    this.el.style.transform = `translateX(280px) translateY(-${ (__hx_Msg_list.size -1 )* 50}px)`
+    this.el.style.transform = `translateX(280px) translateY(-${(__hx_Msg_list.size - 1) * 50}px)`
   }
   /**
    * @param {any} text
@@ -172,8 +172,8 @@ const openDown = (url, e, name) => {
   }
 
   fetch(url, {
-      mode: "cors"
-    })
+    mode: "cors"
+  })
     .then(async resp => {
       // instead of response.json() and other methods
       const reader = resp.body.getReader();
@@ -203,7 +203,7 @@ const openDown = (url, e, name) => {
         chunks.push(value);
         receivedLength += value.length;
         const text =
-          __hx_Msg.update(`Received ${ formatBytes( receivedLength )} / ${ formatBytes( contentLength ) }`)
+          __hx_Msg.update(`Received ${formatBytes(receivedLength)} / ${formatBytes(contentLength)}`)
       }
       __hx_Msg.close()
       return new Blob(chunks, {
@@ -261,7 +261,7 @@ const createDomAll = (item, fn) => {
 const createDom = (cfg) => {
   const {
     parent,
-    link,
+    link = '',
     name,
     className = '',
     style = '',
@@ -286,7 +286,10 @@ const createDom = (cfg) => {
         linkArr.forEach(({
           link,
           name
-        }) => openDown(link, e, name))
+        }) => {
+          const newName = name || lastItem(link.split('/'))
+          openDown(link, e, newName)
+        })
       } else {
         openDown(link, e, newName);
       }
@@ -373,94 +376,106 @@ const init = () => {
   }
 
   window.addEventListener('mouseover', throttle(
-      (event) => {
-        const {
-          target
-        } = event
-        if (!event.ctrlKey || !target) {
-          return
-        }
-        if (!['G', 'PATH', 'RECT', 'USE', 'SVG', 'IMG'].includes(target.tagName.toUpperCase())) {
-          return
-        }
-
+    (event) => {
+      const {
+        target
+      } = event
+      if (event.ctrlKey && event.shiftKey) {
+        const linkArr = [...new Set([...document.querySelectorAll('img[src*=".svg"]')].map(x => x.src))].map(x => ({ link: x }))
         const cfg = {
-          link: '',
-          style: 'left: 10px;top: 10px;',
-          parent: null,
+          linkArr,
+          title: "下载全部 svg 图片",
+          style: 'position: fixed; left: 10px;top: 50vh;',
+          parent: document.body,
           postion: 'beforeEnd',
-          name: '',
-        }
-
-        // remote svg
-        if (target.tagName.toUpperCase() === 'IMG' && target.src.includes('.svg')) {
-          Object.assign(cfg, {
-            link: target.src,
-            style: 'left: -10px;top: -10px;',
-            parent: target.parentElement,
-            postion: 'beforeEnd',
-          })
-          createDom(cfg)
-          return
-        }
-        // inline svg
-        const parentSvg = findFatherElement(target, 'svg');
-        if (parentSvg) {
-          Object.assign(cfg, {
-            link: svgStr2BlobUrl(parentSvg.outerHTML),
-            style: 'left: -10px;top: -10px;',
-            parent: parentSvg.parentElement,
-            postion: 'beforeEnd',
-            name: parentSvg.attributes['aria-label'] && parentSvg.attributes['aria-label'].value || parentSvg.id || parentSvg.className.baseVal
-          })
-          createDom(cfg)
-          return
-        }
-
-        // svg symbol
-        let baseVal = '';
-        let container = null
-        if (target.tagName.toUpperCase() === 'USE') {
-          baseVal = target.href.baseVal;
-          container = target.parentElement.parentElement
-        } else if (target.tagName.toUpperCase() === 'SVG' &&
-          target.firstChild && target.firstChild.tagName && target.firstChild.tagName.toUpperCase() === 'USE'
-        ) {
-          baseVal = target.firstChild.href.baseVal
-          container = target.parentElement
-        }
-        if (baseVal) {
-          const symbol = document.querySelector(baseVal)
-          const dom2Arr = (x) => {
-            const d = x;
-            d.removeAttribute('xmlns');
-            return [x.id, d.outerHTML]
-          }
-          const GradientList = Object.fromEntries([...Array.from(document.querySelectorAll('svg>linearGradient,svg>radialGradient'))].map(x => dom2Arr(x)))
-          const fillUrl = [...Array.from(symbol.querySelectorAll("[fill^=url]"))].map(y => {
-            const key = y.attributes.getNamedItem('fill').value.replace(/^url\(#|\)$/gi, '');
-            return GradientList[key || ''] || ''
-          }).join('');
-          if (!fillUrl) {
-            console.log('! fillUrl')
-          } else if (symbol.querySelector('defs')) {
-            symbol.querySelector('defs').insertAdjacentHTML('beforeend', fillUrl)
-          } else if (fillUrl) {
-            symbol.insertAdjacentHTML('afterbegin', `<defs>${fillUrl}</defs>`)
-          }
-
-          Object.assign(cfg, {
-            link: svgStr2BlobUrl(symbol.outerHTML.replace(/symbol/g, 'svg')),
-            style: 'left: 10px;top: 10px;',
-            parent: container,
-            postion: 'beforeEnd',
-            name: symbol.id,
-          })
-
         }
         createDom(cfg)
+        return
+      }
+      if (!event.ctrlKey || !target) {
+        return
+      }
+      if (!['G', 'PATH', 'RECT', 'USE', 'SVG', 'IMG'].includes(target.tagName.toUpperCase())) {
+        return
+      }
 
-      })
+      const cfg = {
+        link: '',
+        style: 'left: 10px;top: 10px;',
+        parent: null,
+        postion: 'beforeEnd',
+        name: '',
+      }
+
+      // remote svg
+      if (target.tagName.toUpperCase() === 'IMG' && target.src.includes('.svg')) {
+        Object.assign(cfg, {
+          link: target.src,
+          style: 'left: -10px;top: -10px;',
+          parent: target.parentElement,
+          postion: 'beforeEnd',
+        })
+        createDom(cfg)
+        return
+      }
+      // inline svg
+      const parentSvg = findFatherElement(target, 'svg');
+      if (parentSvg) {
+        Object.assign(cfg, {
+          link: svgStr2BlobUrl(parentSvg.outerHTML),
+          style: 'left: -10px;top: -10px;',
+          parent: parentSvg.parentElement,
+          postion: 'beforeEnd',
+          name: parentSvg.attributes['aria-label'] && parentSvg.attributes['aria-label'].value || parentSvg.id || parentSvg.className.baseVal
+        })
+        createDom(cfg)
+        return
+      }
+
+      // svg symbol
+      let baseVal = '';
+      let container = null
+      if (target.tagName.toUpperCase() === 'USE') {
+        baseVal = target.href.baseVal;
+        container = target.parentElement.parentElement
+      } else if (target.tagName.toUpperCase() === 'SVG' &&
+        target.firstChild && target.firstChild.tagName && target.firstChild.tagName.toUpperCase() === 'USE'
+      ) {
+        baseVal = target.firstChild.href.baseVal
+        container = target.parentElement
+      }
+      if (baseVal) {
+        const symbol = document.querySelector(baseVal)
+        const dom2Arr = (x) => {
+          const d = x;
+          d.removeAttribute('xmlns');
+          return [x.id, d.outerHTML]
+        }
+        const GradientList = Object.fromEntries([...Array.from(document.querySelectorAll('svg>linearGradient,svg>radialGradient'))].map(x => dom2Arr(x)))
+        const fillUrl = [...Array.from(symbol.querySelectorAll("[fill^=url]"))].map(y => {
+          const key = y.attributes.getNamedItem('fill').value.replace(/^url\(#|\)$/gi, '');
+          return GradientList[key || ''] || ''
+        }).join('');
+        if (!fillUrl) {
+          console.log('! fillUrl')
+        } else if (symbol.querySelector('defs')) {
+          symbol.querySelector('defs').insertAdjacentHTML('beforeend', fillUrl)
+        } else if (fillUrl) {
+          symbol.insertAdjacentHTML('afterbegin', `<defs>${fillUrl}</defs>`)
+        }
+
+        Object.assign(cfg, {
+          link: svgStr2BlobUrl(symbol.outerHTML.replace(/symbol/g, 'svg')),
+          style: 'left: 10px;top: 10px;',
+          parent: container,
+          postion: 'beforeEnd',
+          name: symbol.id,
+        })
+
+      }
+      createDom(cfg)
+
+    })
 
   )
 
