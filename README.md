@@ -22,6 +22,8 @@ Some user scripts and styles
 
 ### (1) Download Original Picture
 
+[greasyfork](https://greasyfork.org/zh-CN/scripts/396746-download-original-picture)
+
 > supported websites: `medium` , `x` ( `twitter`), `weibo`, `bing` , `edge home`
 
 > supported websites ( require set CORS ) : `wallpaperhub.app` , `vmgirls` 
