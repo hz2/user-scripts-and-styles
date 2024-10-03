@@ -381,7 +381,10 @@ const init = () => {
         target
       } = event
       if (event.ctrlKey && event.shiftKey) {
-        const linkArr = [...new Set([...document.querySelectorAll('img[src*=".svg"]')].map(x => x.src))].map(x => ({ link: x }))
+        const linkArr = [
+          ...new Set([...document.querySelectorAll('img[src*=".svg"]')].map(x => x.src)),
+          ...([ ...new Set([...document.querySelectorAll('svg')].map	(x=> x.outerHTML ))].map(x => svgStr2BlobUrl(x)))
+        ].map(x => ({ link: x }))
         const cfg = {
           linkArr,
           title: "下载全部 svg 图片",
