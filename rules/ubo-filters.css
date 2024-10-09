@@ -1,0 +1,92 @@
+! 2021-02-05 https://finance.sina.com.cn
+||n.sinaimg.cn/finance/cece9e13/20210106/0106_zyc_yyy02.gif$image
+
+! 2022-06-17 https://www.ft.com
+www.ft.com##.o-cookie-message--active.o-cookie-message
+
+! 2023-02-12 https://www.bing.com
+www.bing.com###crs_pane
+www.bing.com##.vs_cont
+
+! 2023-07-12 https://twitter.com
+x.com##[aria-label="获得认证"]
+x.com##[aria-label="已认证"],[aria-label="社群"],[aria-label="列表"]
+x.com##[aria-label="订阅 Premium"]
+x.com##[aria-label="Premium"]
+
+! 2023-09-27 https://www.ithome.com
+www.ithome.com###down
+
+
+! youtube.com##+js(set, yt.config_.openPopupConfig.supportedPopups.adBlockMessageViewModel, false)
+! youtube.com##+js(set, Object.prototype.adBlocksFound, 0)
+! youtube.com##+js(set, ytplayer.config.args.raw_player_response.adPlacements, [])
+! youtube.com##+js(set, Object.prototype.hasAllowedInstreamAd, true)
+! youtube.com#@##YtKevlarVisibilityIdentifier
+! youtube.com#@##YtSparklesVisibilityIdentifier
+! 
+! youtube.com##+js(set, yt.config_.openPopupConfig.supportedPopups.adBlockMessageViewModel, false)
+! youtube.com##+js(set, Object.prototype.adBlocksFound, 0)
+! youtube.com##+js(set, ytplayer.config.args.raw_player_response.adPlacements, [])
+! youtube.com##+js(set, Object.prototype.hasAllowedInstreamAd, true)
+! youtube.com##+js(set, yt.config_.openPopupConfig.supportedPopups.adBlockMessageViewModel, false)
+! youtube.com##+js(set, Object.prototype.adBlocksFound, 0)
+! youtube.com##+js(set, ytplayer.config.args.raw_player_response.adPlacements, [])
+! youtube.com##+js(set, Object.prototype.hasAllowedInstreamAd, true)
+
+! 2023-12-01 https://www.ithome.com
+||img.ithome.com/www/music.svg$image
+www.ithome.com###music
+www.ithome.com###top > .bb > .fr
+www.ithome.com###top > .bb > .fl
+
+! 2023-12-14 https://www.ithome.com
+www.ithome.com###rm-login-modal
+
+! 2023-12-18 https://www.ithome.com
+www.ithome.com###ilikeit-div
+www.ithome.com###login-guide-box,#fls
+
+! 2023-12-21 https://www.ithome.com
+www.ithome.com###lns
+
+! 2024-01-17 https://www.ithome.com
+www.ithome.com##.shareto
+
+! 2024-01-25 https://twitter.com
+x.com##.r-1ny4l3l.r-1adg3ll.css-175oi2r > .css-175oi2r > .r-14lw9ot.css-175oi2r
+
+! 2024-01-30 https://www.ithome.com
+www.ithome.com##.dy-live-bar
+
+! 2024-03-13 https://www.v2ex.com
+||www.v2ex.com/static/img/corner_star.png$image
+www.v2ex.com##div.item.cell[style*="star"]
+
+! 2024-03-15 https://www.ithome.com
+www.ithome.com##.slick-wrap
+
+! 2024-03-26 https://www.ithome.com
+www.ithome.com##ul.nl > li.n > [href^="https://quan.ithome.com"]
+! www.ithome.com##li:has(a[href*="quan.ithome"])
+! www.ithome.com##ul>li:has(a[href*="lapin"])
+
+! 2024-05-09 https://www.cnbeta.com.tw
+www.cnbeta.com.tw##[href*="/aff_c"]
+www.cnbeta.com.tw##.article-global > p > strong:has([href*="/aff_c"])
+
+! 2024年6月29日 https://x.com
+x.com##[aria-label="认证组织"]
+
+! 2024年7月24日 https://github.com
+github.com##.border-bottom.mb-5.feed-right-sidebar > div > .js-notice > .overflow-hidden.js-notice-dismiss.p-3.mb-4.rounded-2.position-relative.Box
+
+! 2024年8月15日 https://x.com
+x.com##[aria-label="订阅 Premium，撰写自己的长帖"]
+
+! 2024年10月9日 https://www.ithome.com
+www.ithome.com##li:has(a:has-text(/最会买|IT之家纯血鸿蒙/))
+
+! 2024年10月9日 https://x.com
+x.com##div:has(>div>[aria-label="推荐关注"])
+
