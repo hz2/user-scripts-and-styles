@@ -464,7 +464,7 @@ const init = () => {
   } else if (hostname === "www.bing.com") {
     // bing 首页
     const orig = document.querySelector('[style*="th?id="]').style.backgroundImage
-    const link = orig.match(/th\?id\=[\w\d\.\-\_]+/g)[0].replace('1920x1080', 'UHD')
+    const link = orig.match(/th\?id\=[\w\d\.\-\_]+/g)[0].replace('1920x1080', 'UHD').replace('webp', 'jpg')
     const name = link && link.split('=')[1]
     const style = 'position: relative;width: 42px;height: 42px;margin: 0;opacity: .9;'
     const cfg = {
